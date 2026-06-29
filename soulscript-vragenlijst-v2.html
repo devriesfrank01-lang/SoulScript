@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan je feestje — SoulScript</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--night);color:var(--cream);overflow-x:hidden;min-height:100vh}
+
+:root{
+  --night:#1A1025;
+  --twilight:#2C1A4A;
+  --orange:#C45E00;
+  --coral:#E8734A;
+  --gold:#F5A623;
+  --rose:#9E3060;
+  --cream:#FDF6EE;
+  --dusk:#F0E6D8;
+  --muted:#9A8878;
+  --border:rgba(196,94,0,.18);
+}
+
+/* NAV */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:70px;
+  background:rgba(26,16,37,.97);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 rgba(245,166,35,.1);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);text-decoration:none}
+.logo b{color:var(--gold);font-weight:400}
+.nav-back{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.45);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.nav-back:hover{color:var(--gold)}
+
+/* PROGRESS */
+.progress-wrap{
+  position:fixed;top:70px;left:0;right:0;z-index:299;
+  background:rgba(26,16,37,.95);border-bottom:1px solid rgba(245,166,35,.08);
+  padding:14px 52px;
+}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-section{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)}
+.progress-count{font-size:11px;color:rgba(253,246,238,.3)}
+.progress-bar{height:2px;background:rgba(245,166,35,.1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));transition:width .5s ease;width:0%}
+
+/* LAYOUT */
+.quiz-wrap{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:160px 52px 80px;
+}
+.quiz-inner{max-width:680px;width:100%}
+
+/* SLIDE */
+.slide{display:none}
+.slide.active{display:block;animation:fadeUp .45s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.slide-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.slide-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--orange)}
+.slide-q{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);font-weight:300;line-height:1.18;color:var(--cream);margin-bottom:12px}
+.slide-q em{font-style:italic;color:var(--gold)}
+.slide-hint{font-size:13px;color:rgba(253,246,238,.35);margin-bottom:40px;line-height:1.6}
+
+/* CHOICES */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
+.choice{
+  background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.1);
+  padding:22px 24px;cursor:pointer;
+  display:flex;align-items:flex-start;gap:16px;
+  transition:background .18s,border-color .18s,transform .15s;
+  text-align:left;font-family:'DM Sans',sans-serif;position:relative;
+}
+.choice:hover{background:rgba(44,26,74,.8);border-color:rgba(245,166,35,.3);transform:translateX(3px)}
+.choice.selected{background:rgba(196,94,0,.18);border-color:var(--orange)}
+.choice-ico{font-size:24px;flex-shrink:0;margin-top:2px}
+.choice-label{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px}
+.choice-sub{font-size:12px;color:rgba(253,246,238,.38);line-height:1.45}
+
+/* SLIDER */
+.slider-wrap{margin:8px 0 20px}
+.slider-labels{display:flex;justify-content:space-between;margin-bottom:16px}
+.slider-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,246,238,.35)}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(245,166,35,.15);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--orange);cursor:pointer;box-shadow:0 0 0 4px rgba(196,94,0,.2);transition:background .2s}
+input[type=range]::-webkit-slider-thumb:hover{background:var(--gold)}
+.slider-value{text-align:center;margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--gold)}
+
+/* TEXTAREA & INPUT */
+textarea{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;padding:20px 24px;resize:vertical;min-height:140px;line-height:1.7;transition:border-color .2s;outline:none}
+textarea::placeholder{color:rgba(253,246,238,.22)}
+textarea:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7)}
+.text-input{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;padding:16px 24px;line-height:1.7;transition:border-color .2s;outline:none;display:block}
+.text-input::placeholder{color:rgba(253,246,238,.22)}
+.text-input:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7)}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 18px;border:1px solid rgba(245,166,35,.15);color:rgba(253,246,238,.45);cursor:pointer;transition:all .18s;background:transparent;font-family:'DM Sans',sans-serif}
+.tag:hover{border-color:rgba(245,166,35,.45);color:var(--cream)}
+.tag.selected{background:rgba(196,94,0,.2);border-color:var(--orange);color:var(--cream)}
+
+/* NAV BUTTONS */
+.slide-nav{display:flex;align-items:center;justify-content:space-between;margin-top:44px}
+.btn-prev{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,246,238,.3);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;transition:color .2s;padding:0}
+.btn-prev:hover{color:var(--gold)}
+.btn-next{background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-next:hover{background:var(--coral);transform:translateY(-2px)}
+
+/* SECTION INTRO */
+.section-intro{text-align:center;padding:20px 0}
+.section-intro .big-ico{font-size:56px;display:block;margin-bottom:28px}
+.section-intro h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--cream);margin-bottom:16px;line-height:1.15}
+.section-intro h2 em{font-style:italic;color:var(--gold)}
+.section-intro p{font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:460px;margin:0 auto 36px}
+.divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 36px}
+
+/* FINISH */
+.finish{text-align:center;padding:20px 0}
+.finish .finish-ico{font-size:64px;display:block;margin-bottom:28px}
+.finish h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,54px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:16px}
+.finish h2 em{color:var(--gold)}
+.finish p{font-size:14px;color:rgba(253,246,238,.45);line-height:1.72;max-width:480px;margin:0 auto 40px}
+.finish-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-finish-pri{background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;text-decoration:none;display:inline-block;border:none;cursor:pointer;transition:background .2s}
+.btn-finish-pri:hover{background:var(--coral)}
+.btn-finish-sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,246,238,.35);background:none;border:1px solid rgba(253,246,238,.12);padding:16px 28px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .2s}
+.btn-finish-sec:hover{color:var(--cream)}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  #nav{padding:0 24px}
+  .progress-wrap{padding:14px 24px}
+  .quiz-wrap{padding:150px 24px 80px}
+  .choices{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .slide-nav{flex-direction:column-reverse;gap:16px;align-items:stretch}
+  .btn-next{text-align:center}
+  .btn-prev{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="soulscript-website-v4.html" class="logo">Soul<b>Script</b></a>
+  <a href="soulscript-website-v4.html" class="nav-back">← Terug naar home</a>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span class="progress-section" id="progress-section">Welkom</span>
+    <span class="progress-count" id="progress-count"></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<div class="quiz-wrap">
+<div class="quiz-inner">
+
+<!-- WELKOM -->
+<div class="slide active" data-section="Welkom">
+  <div class="section-intro">
+    <span class="big-ico">🌅</span>
+    <h2>Jij schrijft<br><em>het script.</em></h2>
+    <div class="divider-line"></div>
+    <p>Dit duurt zo'n 15 à 20 minuten. Je mag stoppen wanneer je wil en later verder. Er zijn geen foute antwoorden — alleen jouw antwoorden.</p>
+  </div>
+  <div class="slide-nav">
+    <span></span>
+    <button class="btn-next" onclick="next()">Begin →</button>
+  </div>
+</div>
+
+<!-- DE BASIS INTRO -->
+<div class="slide" data-section="De basis">
+  <div class="section-intro">
+    <span class="big-ico">📋</span>
+    <h2>Eerst de <em>basics.</em></h2>
+    <div class="divider-line"></div>
+    <p>Vijf snelle keuzes die alles in gang zetten. Geen druk — jij beslist.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 1: OPBAREN -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q">Manier van <em>opbaren?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🏠</span>
+      <div>
+        <span class="choice-label">Lekker in mijn eigen bedje</span>
+        <span class="choice-sub">Oost, west, thuis best.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🛎️</span>
+      <div>
+        <span class="choice-label">Een luxe hotelbed</span>
+        <span class="choice-sub">Maar dan wel met roomservice graag.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 2: TYPE UITVAART -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q">Type <em>uitvaart?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">⚰️</span>
+      <div>
+        <span class="choice-label">Zand erover</span>
+        <span class="choice-sub">Terug naar de basis.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🔥</span>
+      <div>
+        <span class="choice-label">De fik erin</span>
+        <span class="choice-sub">Altijd al van vuurwerk gehouden.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 3: DONOR -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Donor?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">💚</span>
+      <div>
+        <span class="choice-label">Deel mij maar uit</span>
+        <span class="choice-sub">Mijn motor loopt nog soepel.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🔒</span>
+      <div>
+        <span class="choice-label">Alles compleet houden</span>
+        <span class="choice-sub">Alleen mijn humor mag iemand erven.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 4: BUDGET -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Budget?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🥂</span>
+      <div>
+        <span class="choice-label">Spend er maar op los</span>
+        <span class="choice-sub">De eindafrekening komt toch niet bij mij terecht.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🐖</span>
+      <div>
+        <span class="choice-label">Zo skeer mogelijk</span>
+        <span class="choice-sub">Blijft er meer geld over voor mijn dierbaren.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 5: BERICHTGEVING -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Berichtgeving?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">📣</span>
+      <div>
+        <span class="choice-label">Breaking news</span>
+        <span class="choice-sub">Op de socials, in de krant, schreeuw het van de daken.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">💌</span>
+      <div>
+        <span class="choice-label">Uitnodiging voor definitieve afscheidsparty</span>
+        <span class="choice-sub">Laten we het een beetje exclusive houden.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- MUZIEK INTRO -->
+<div class="slide" data-section="Muziek & soundtrack">
+  <div class="section-intro">
+    <span class="big-ico">🎵</span>
+    <h2><em>Muziek</em><br>& soundtrack</h2>
+    <div class="divider-line"></div>
+    <p>Wat er gespeeld wordt op jouw dag. Van het eerste nummer tot het laatste.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Wat is het eerste nummer als mensen <em>binnenkomen?</em></h2>
+  <p class="slide-hint">Dit zet de toon voor alles. Denk aan een artiest, liedje, of gevoel.</p>
+  <input type="text" class="text-input" placeholder="Bijv. 'Here Comes the Sun' van The Beatles..." />
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Wat is de sfeer van jouw <em>soundtrack?</em></h2>
+  <p class="slide-hint">Kies de toon die het beste bij jou past.</p>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🎷</span>
+      <div><span class="choice-label">Soulvol & warm</span><span class="choice-sub">Jazz, soul, klassiek — iets dat diep gaat.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🎉</span>
+      <div><span class="choice-label">Feestelijk & dansbaar</span><span class="choice-sub">Pop, disco, iedereen op de dansvloer.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🌿</span>
+      <div><span class="choice-label">Rustig & intiem</span><span class="choice-sub">Akoestisch, zachte singer-songwriter.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🎸</span>
+      <div><span class="choice-label">Hard & onvergetelijk</span><span class="choice-sub">Rock, iets dat blijft hangen.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Is er een nummer dat <em>absoluut verboden</em> is?</h2>
+  <p class="slide-hint">Optioneel — maar als er iets is dat je nooit wil horen op jouw dag, schrijf het op.</p>
+  <textarea placeholder="Bijv. 'My Heart Will Go On' — alsjeblieft niet..."></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- OUTFIT INTRO -->
+<div class="slide" data-section="Outfit & uiterlijk">
+  <div class="section-intro">
+    <span class="big-ico">👗</span>
+    <h2><em>Outfit</em><br>& uiterlijk</h2>
+    <div class="divider-line"></div>
+    <p>Jouw laatste look. Zodat niemand hoeft te gokken wat jij zou hebben gedragen.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Hoe formeel is jouw <em>laatste look?</em></h2>
+  <p class="slide-hint">Schuif naar wat bij jou past.</p>
+  <div class="slider-wrap">
+    <div class="slider-labels">
+      <span class="slider-label">Casual & comfortabel</span>
+      <span class="slider-label">Gekleed & stijlvol</span>
+    </div>
+    <input type="range" min="0" max="100" value="50" oninput="updateSlider(this,'outfit-formeel',['Heel casual','Eerder casual','Ergens in het midden','Eerder gekleed','Heel gekleed & stijlvol'])" />
+    <p class="slider-value" id="outfit-formeel">Ergens in het midden</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Beschrijf jouw <em>outfit</em> — zo specifiek of vaag als je wil.</h2>
+  <p class="slide-hint">Kleur, stijl, een specifiek kledingstuk — alles helpt.</p>
+  <textarea placeholder="Bijv. 'Mijn favoriete blauwe jurk, met de zilveren ketting van mijn moeder...'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Wil je een <em>dresscode</em> voor de aanwezigen?</h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🎨</span>
+      <div><span class="choice-label">Kleur verplicht</span><span class="choice-sub">Geen zwart. Ik wil kleur zien.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">⚫</span>
+      <div><span class="choice-label">Traditioneel zwart</span><span class="choice-sub">Stijlvol en rustig.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">✨</span>
+      <div><span class="choice-label">Gekleed & feestelijk</span><span class="choice-sub">Alsof ze naar een bruiloft gaan.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">👟</span>
+      <div><span class="choice-label">Kom zoals je bent</span><span class="choice-sub">Lekker casual, geen gedoe.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- LOCATIE INTRO -->
+<div class="slide" data-section="Locatie & sfeer">
+  <div class="section-intro">
+    <span class="big-ico">📍</span>
+    <h2><em>Locatie</em><br>& sfeer</h2>
+    <div class="divider-line"></div>
+    <p>Waar wil jij dat het feestje plaatsvindt? Wat voor gevoel moet de ruimte geven?</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Waar wil jij jouw <em>feestje</em> houden?</h2>
+  <p class="slide-hint">Meerdere opties zijn mogelijk.</p>
+  <div class="tags">
+    <button class="tag" onclick="toggleTag(this)">Buiten in de natuur</button>
+    <button class="tag" onclick="toggleTag(this)">Op het strand</button>
+    <button class="tag" onclick="toggleTag(this)">In een restaurant</button>
+    <button class="tag" onclick="toggleTag(this)">In een café of kroeg</button>
+    <button class="tag" onclick="toggleTag(this)">In een kerk</button>
+    <button class="tag" onclick="toggleTag(this)">Thuis</button>
+    <button class="tag" onclick="toggleTag(this)">In een feestzaal</button>
+    <button class="tag" onclick="toggleTag(this)">In een museum</button>
+    <button class="tag" onclick="toggleTag(this)">Op een boot</button>
+    <button class="tag" onclick="toggleTag(this)">Maakt me niet uit</button>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Hoe intiem of groot moet <em>jouw feestje</em> zijn?</h2>
+  <div class="slider-wrap">
+    <div class="slider-labels">
+      <span class="slider-label">Klein & intiem</span>
+      <span class="slider-label">Groot & uitbundig</span>
+    </div>
+    <input type="range" min="0" max="100" value="50" oninput="updateSlider(this,'grootte-slider',['Alleen de allernauwste kring','Klein & intiem','Voor de close circle','Groter gezelschap','Hoe groter hoe beter'])" />
+    <p class="slider-value" id="grootte-slider">Voor de close circle</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Heb je een <em>specifieke plek</em> in gedachten?</h2>
+  <p class="slide-hint">Een naam, stad, adres — of gewoon een gevoel.</p>
+  <input type="text" class="text-input" placeholder="Bijv. 'Het café op de hoek waar we altijd kwamen...'"/>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- ETEN INTRO -->
+<div class="slide" data-section="Eten & drinken">
+  <div class="section-intro">
+    <span class="big-ico">🍽️</span>
+    <h2><em>Eten</em><br>& drinken</h2>
+    <div class="divider-line"></div>
+    <p>Bitterballen of niet — jij beslist. En iedereen houdt zich eraan.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Eten & drinken">
+  <p class="slide-eyebrow">Eten & drinken</p>
+  <h2 class="slide-q">Wat voor <em>eten</em> hoort bij jouw feestje?</h2>
+  <p class="slide-hint">Selecteer alles wat past.</p>
+  <div class="tags">
+    <button class="tag" onclick="toggleTag(this)">Bitterballen 🧆</button>
+    <button class="tag" onclick="toggleTag(this)">Tapas & hapjes</button>
+    <button class="tag" onclick="toggleTag(this)">Uitgebreid diner</button>
+    <button class="tag" onclick="toggleTag(this)">BBQ</button>
+    <button class="tag" onclick="toggleTag(this)">Cake & gebak</button>
+    <button class="tag" onclick="toggleTag(this)">Kaas & vleeswaren</button>
+    <button class="tag" onclick="toggleTag(this)">Vegetarisch</button>
+    <button class="tag" onclick="toggleTag(this)">Mijn lievelingsgerecht</button>
+    <button class="tag" onclick="toggleTag(this)">Eten maakt niet uit</button>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Eten & drinken">
+  <p class="slide-eyebrow">Eten & drinken</p>
+  <h2 class="slide-q">Wat is <em>absoluut verplicht</em> op tafel?</h2>
+  <p class="slide-hint">Jouw favoriete gerecht, snack of drankje — leg het vast.</p>
+  <textarea placeholder="Bijv. 'Champagne. Goede champagne. Geen prosecco.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- SPEECHES INTRO -->
+<div class="slide" data-section="Speeches & teksten">
+  <div class="section-intro">
+    <span class="big-ico">✉️</span>
+    <h2><em>Speeches</em><br>& teksten</h2>
+    <div class="divider-line"></div>
+    <p>Wie mag wat zeggen? En hoe lang mag het duren? Jij bepaalt de regels.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Speeches & teksten">
+  <p class="slide-eyebrow">Speeches & teksten</p>
+  <h2 class="slide-q">Wil je dat er <em>toespraken</em> worden gehouden?</h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🎤</span>
+      <div><span class="choice-label">Ja, graag</span><span class="choice-sub">Laat mensen maar praten. Hoe meer hoe beter.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🤫</span>
+      <div><span class="choice-label">Kort en krachtig</span><span class="choice-sub">Eén of twee personen, max 5 minuten.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">🚫</span>
+      <div><span class="choice-label">Liever niet</span><span class="choice-sub">Geen formele speeches. Gewoon samenzijn.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this,'single')">
+      <span class="choice-ico">📝</span>
+      <div><span class="choice-label">Eén specifiek persoon</span><span class="choice-sub">Ik weet al wie ik wil dat iets zegt.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Speeches & teksten">
+  <p class="slide-eyebrow">Speeches & teksten</p>
+  <h2 class="slide-q">Is er iemand die je specifiek wil vragen <em>iets te zeggen?</em></h2>
+  <p class="slide-hint">Naam en eventueel wat je wil dat ze zeggen of vermijden.</p>
+  <textarea placeholder="Bijv. 'Mijn broer Thomas — hij kent de goede verhalen. En de slechte moppen mag hij ook.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- PERSOONLIJKE BOODSCHAP INTRO -->
+<div class="slide" data-section="Persoonlijke boodschap">
+  <div class="section-intro">
+    <span class="big-ico">💌</span>
+    <h2>Jouw <em>woorden.</em></h2>
+    <div class="divider-line"></div>
+    <p>Dit is het meest persoonlijke deel. Neem de tijd. Of sla het over en kom later terug.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Wat wil je <em>zeggen</em> aan de mensen die achterblijven?</h2>
+  <p class="slide-hint">Dit wordt bewaard en gedeeld op het moment dat jij dat wil. Schrijf wat je voelt.</p>
+  <textarea style="min-height:200px" placeholder="Lieve mensen..."></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Is er iets dat je wil dat mensen <em>over je onthouden?</em></h2>
+  <p class="slide-hint">Een waarde, een overtuiging, een herinnering die je wil doorgeven.</p>
+  <textarea placeholder="Bijv. 'Ik hoop dat ze weten hoe trots ik op ze was...'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Wat is de laatste <em>grap of quote</em> die je wil achterlaten?</h2>
+  <p class="slide-hint">Optioneel — maar humor is ook liefde.</p>
+  <textarea placeholder="Bijv. 'Ik zei toch dat ik ziek was.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="prev()">← Terug</button>
+    <button class="btn-next" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- KLAAR -->
+<div class="slide" data-section="Klaar!">
+  <div class="finish">
+    <span class="finish-ico">🌅</span>
+    <h2>Het script is<br><em>geschreven.</em></h2>
+    <p>Goed gedaan. Jij hebt zojuist de mensen van je houden een groot cadeau gegeven: ze hoeven straks niets te gokken. Ze kunnen gewoon verdrietig zijn.</p>
+    <div class="finish-btns">
+      <a href="soulscript-website-v4.html" class="btn-finish-pri">Opslaan & afsluiten</a>
+      <button class="btn-finish-sec" onclick="goTo(0)">Opnieuw bekijken</button>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+
+function goTo(i) {
+  slides[current].classList.remove('active');
+  current = Math.max(0, Math.min(i, total - 1));
+  slides[current].classList.add('active');
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function next(){goTo(current+1)}
+function prev(){goTo(current-1)}
+
+function updateProgress(){
+  const section = slides[current].dataset.section || '';
+  const pct = Math.round((current/(total-1))*100);
+  document.getElementById('progress-section').textContent = section;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  const q = current === 0 ? '' : current+' / '+(total-1);
+  document.getElementById('progress-count').textContent = q;
+}
+
+function selectChoice(el, mode){
+  const group = el.closest('.choices');
+  if(mode==='single') group.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));
+  el.classList.toggle('selected');
+}
+
+function toggleTag(el){el.classList.toggle('selected')}
+
+function updateSlider(el, id, labels){
+  const v = parseInt(el.value);
+  const idx = Math.floor(v/100*(labels.length-1));
+  document.getElementById(id).textContent = labels[idx];
+}
+
+updateProgress();
+</script>
+</body>
+</html>
