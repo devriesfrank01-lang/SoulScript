@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SoulScript — Plan je after-party voordat je laatste zon ondergaat. Leg jouw uitvaartwensen vast op een luchtige, laagdrempelige manier.">
+<title>SoulScript — Plan je after-party</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --night:    #1A1025;
+  --twilight: #2C1A4A;
+  --orange:   #C45E00;
+  --coral:    #E8734A;
+  --gold:     #F5A623;
+  --rose:     #9E3060;
+  --cream:    #FDF6EE;
+  --dusk:     #F0E6D8;
+  --muted:    #9A8878;
+  --border:   rgba(196,94,0,0.14);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--night);
+  overflow-x: hidden;
+}
+
+/* ─── SKIP LINK (accessibility) ───────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 20px;
+  background: var(--orange);
+  color: var(--cream);
+  padding: 10px 20px;
+  font-size: 13px;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 20px; }
+
+/* ─── NAVIGATION ───────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 68px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(26,16,37,0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 rgba(245,166,35,0.1);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(253,246,238,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: var(--orange);
+  color: var(--cream) !important;
+  padding: 10px 24px;
+  font-weight: 500 !important;
+  transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(--coral) !important; color: var(--cream) !important; }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--cream);
+  transition: all 0.25s;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  top: 68px; left: 0; right: 0;
+  background: var(--night);
+  border-top: 1px solid rgba(245,166,35,0.1);
+  padding: 24px 32px 32px;
+  z-index: 199;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: rgba(253,246,238,0.7);
+  text-decoration: none;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(245,166,35,0.08);
+  transition: color 0.2s;
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+.mobile-menu .m-cta {
+  background: var(--orange);
+  color: var(--cream);
+  text-align: center;
+  padding: 14px;
+  margin-top: 12px;
+  border: none;
+  font-weight: 500;
+}
+
+/* ─── HERO ──────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    175deg,
+    #0E0819 0%,
+    #1A1025 20%,
+    #2C1A4A 42%,
+    #9E3060 62%,
+    #C45E00 76%,
+    #F5A623 88%,
+    #FDF6EE 100%
+  );
+}
+
+/* Grain texture */
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* Horizon line */
+.hero-horizon {
+  position: absolute;
+  bottom: 220px;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--orange) 20%, var(--gold) 50%, var(--rose) 80%, transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* Sun semicircle */
+.hero-sun {
+  position: absolute;
+  bottom: 213px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 40px;
+  background: radial-gradient(ellipse at center bottom, #FFEF9F, #F5A623 50%, transparent 100%);
+  border-radius: 80px 80px 0 0;
+  opacity: 0.75;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-end;
+  gap: 48px;
+}
+
+.hero-left {}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  opacity: 0.8;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(46px, 5.5vw, 80px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.hero-h1 em {
+  font-style: italic;
+  color: var(--gold);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(253,246,238,0.5);
+  max-width: 400px;
+  margin-bottom: 44px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover { background: var(--coral); transform: translateY(-2px); }
+
+.btn-ghost {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(253,246,238,0.5);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.btn-ghost:hover { color: var(--gold); gap: 12px; }
+
+/* Hero right — stats */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-self: flex-end;
+}
+
+.hero-stat {
+  background: rgba(26,16,37,0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(245,166,35,0.12);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  opacity: 0;
+  animation: statIn 0.5s ease forwards;
+}
+
+.hero-stat:nth-child(1) { animation-delay: 0.4s; }
+.hero-stat:nth-child(2) { animation-delay: 0.55s; }
+.hero-stat:nth-child(3) { animation-delay: 0.7s; }
+
+@keyframes statIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.stat-icon { font-size: 22px; flex-shrink: 0; }
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(253,246,238,0.45);
+  line-height: 1.4;
+}
+
+.stat-label strong {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--cream);
+  font-style: italic;
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 2;
+  opacity: 0.4;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+.scroll-hint span {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.scroll-hint::after {
+  content: '↓';
+  color: var(--gold);
+  font-size: 14px;
+}
+
+/* ─── SECTIONS SHARED ──────────────────────────────── */
+.section-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--orange);
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── CONCEPT SECTION ──────────────────────────────── */
+#concept {
+  background: var(--cream);
+  padding: 120px 0;
+}
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.concept-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--night);
+  margin-bottom: 24px;
+}
+
+.concept-left h2 em {
+  font-style: italic;
+  color: var(--orange);
+}
+
+.concept-left p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin-bottom: 16px;
+  max-width: 440px;
+}
+
+.concept-left .link-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-decoration: none;
+  margin-top: 12px;
+  transition: gap 0.2s;
+}
+
+.concept-left .link-more:hover { gap: 14px; }
+
+/* Right: two-word split logo */
+.concept-visual {
+  position: relative;
+  height: 380px;
+  background: var(--twilight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.concept-visual-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.concept-soul {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 100px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1;
+  display: block;
+}
+
+.concept-horizon {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--coral) 50%, var(--rose) 70%, transparent);
+  margin: 4px 0;
+}
+
+.concept-script {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--orange);
+  text-transform: uppercase;
+  display: block;
+}
+
+.concept-visual-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 80%, rgba(196,94,0,0.2) 0%, transparent 60%);
+}
+
+/* ─── HOE HET WERKT ─────────────────────────────────── */
+#hoe-het-werkt {
+  background: var(--night);
+  padding: 120px 0;
+}
+
+#hoe-het-werkt .section-eyebrow { color: var(--gold); }
+#hoe-het-werkt .section-eyebrow::before { background: var(--gold); }
+
+.hhw-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 64px;
+  max-width: 540px;
+}
+
+.hhw-title em { font-style: italic; color: var(--gold); }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,166,35,0.08);
+}
+
+.step {
+  background: var(--night);
+  padding: 40px 32px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.step:hover { background: rgba(44,26,74,0.6); }
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--orange);
+  opacity: 0.2;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.step-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+
+.step h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.step p {
+  font-size: 13px;
+  color: rgba(253,246,238,0.45);
+  line-height: 1.65;
+}
+
+.step-connector {
+  position: absolute;
+  top: 52px;
+  right: -12px;
+  color: var(--orange);
+  font-size: 18px;
+  opacity: 0.3;
+  z-index: 2;
+}
+
+/* ─── AFTER-PARTY TYPES ─────────────────────────────── */
+#after-party-types {
+  background: var(--dusk);
+  padding: 120px 0;
+}
+
+.types-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+
+.types-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--night);
+}
+
+.types-header h2 em { font-style: italic; color: var(--orange); }
+
+.types-header p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  align-self: end;
+}
+
+.personas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.persona-card {
+  background: var(--cream);
+  padding: 32px 24px;
+  border: 1px solid rgba(196,94,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.persona-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--gold));
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+
+.persona-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,16,37,0.12); }
+.persona-card:hover::before { transform: scaleX(1); }
+
+.persona-emoji { font-size: 36px; display: block; margin-bottom: 16px; }
+
+.persona-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--night);
+  margin-bottom: 8px;
+}
+
+.persona-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.persona-tag {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+  background: rgba(196,94,0,0.08);
+  padding: 4px 10px;
+}
+
+/* ─── TESTIMONIALS / VERHALEN ───────────────────────── */
+#verhalen {
+  background: var(--twilight);
+  padding: 120px 0;
+}
+
+#verhalen .section-eyebrow { color: var(--gold); }
+#verhalen .section-eyebrow::before { background: var(--gold); }
+
+.verhalen-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 56px;
+  max-width: 500px;
+}
+
+.verhalen-title em { color: var(--gold); font-style: normal; }
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(245,166,35,0.1);
+}
+
+.quote-block {
+  background: var(--twilight);
+  padding: 48px 36px;
+  position: relative;
+}
+
+.quote-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  color: var(--gold);
+  opacity: 0.15;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.quote-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.quote-author {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+/* ─── FEATURES / WAT KRIJG JE ───────────────────────── */
+#features {
+  background: var(--cream);
+  padding: 120px 0;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.features-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 300;
+  color: var(--night);
+  margin-bottom: 14px;
+}
+
+.features-header h2 em { font-style: italic; color: var(--orange); }
+
+.features-header p {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 440px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(196,94,0,0.08);
+}
+
+.feature {
+  background: var(--cream);
+  padding: 44px 36px;
+  transition: background 0.2s;
+}
+
+.feature:hover { background: white; }
+
+.feature-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--twilight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.feature h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--night);
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ─── PRICING ───────────────────────────────────────── */
+#prijzen {
+  background: var(--night);
+  padding: 120px 0;
+}
+
+#prijzen .section-eyebrow { color: var(--gold); }
+#prijzen .section-eyebrow::before { background: var(--gold); }
+
+.pricing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 56px;
+  max-width: 480px;
+}
+
+.pricing-title em { font-style: italic; color: var(--gold); }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(245,166,35,0.08);
+}
+
+.pricing-card {
+  background: var(--night);
+  padding: 48px 36px;
+  position: relative;
+}
+
+.pricing-card.featured {
+  background: var(--twilight);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--night);
+  background: var(--gold);
+  padding: 4px 10px;
+}
+
+.pricing-plan {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+
+.pricing-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pricing-price span {
+  font-size: 18px;
+  vertical-align: super;
+  color: var(--muted);
+}
+
+.pricing-period {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.pricing-features li {
+  font-size: 13px;
+  color: rgba(253,246,238,0.6);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 11px;
+}
+
+.pricing-features li.disabled {
+  opacity: 0.3;
+  text-decoration: line-through;
+}
+
+.pricing-features li.disabled::before { content: '—'; color: var(--muted); }
+
+.pricing-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.pricing-btn.outline {
+  border: 1px solid rgba(245,166,35,0.3);
+  color: rgba(253,246,238,0.6);
+}
+
+.pricing-btn.outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.pricing-btn.filled {
+  background: var(--orange);
+  color: var(--cream);
+}
+
+.pricing-btn.filled:hover { background: var(--coral); }
+
+/* ─── FAQ ───────────────────────────────────────────── */
+#faq {
+  background: var(--dusk);
+  padding: 120px 0;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.faq-left h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 3.5vw, 48px);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--night);
+  position: sticky;
+  top: 90px;
+}
+
+.faq-left h2 em { font-style: italic; color: var(--orange); }
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(196,94,0,0.15);
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 24px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--night);
+  transition: color 0.2s;
+}
+
+.faq-question:hover { color: var(--orange); }
+
+.faq-toggle {
+  font-size: 20px;
+  color: var(--orange);
+  flex-shrink: 0;
+  transition: transform 0.25s;
+  font-style: normal;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.faq-item.open .faq-answer { max-height: 300px; }
+
+.faq-answer p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.75;
+  padding-bottom: 24px;
+}
+
+/* ─── CTA BAND ──────────────────────────────────────── */
+#cta {
+  background: var(--orange);
+  padding: 96px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#cta::before {
+  content: 'AFTERPARTY';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 160px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(253,246,238,0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+#cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 68px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+#cta p {
+  font-size: 15px;
+  color: rgba(253,246,238,0.7);
+  margin-bottom: 44px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-cta-light {
+  background: var(--cream);
+  color: var(--orange);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 18px 48px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn-cta-light:hover { background: var(--dusk); transform: translateY(-2px); }
+
+/* ─── FOOTER ────────────────────────────────────────── */
+footer {
+  background: var(--night);
+  padding: 72px 48px 40px;
+}
+
+.footer-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid rgba(245,166,35,0.08);
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+
+.footer-brand span { color: var(--gold); }
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(253,246,238,0.35);
+  line-height: 1.65;
+  max-width: 280px;
+  margin-bottom: 28px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(245,166,35,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: rgba(253,246,238,0.4);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+.footer-col h4 {
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col ul li a {
+  font-size: 13px;
+  color: rgba(253,246,238,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover { color: var(--gold); }
+
+.footer-bottom {
+  max-width: 1100px;
+  margin: 32px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 11px;
+  color: rgba(253,246,238,0.2);
+  letter-spacing: 0.06em;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-bottom-links a {
+  font-size: 11px;
+  color: rgba(253,246,238,0.2);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+
+.footer-bottom-links a:hover { color: var(--gold); }
+
+/* ─── COOKIE BANNER ─────────────────────────────────── */
+.cookie-banner {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--twilight);
+  border-top: 1px solid rgba(245,166,35,0.15);
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 500;
+  transform: translateY(0);
+  transition: transform 0.3s;
+}
+
+.cookie-banner.hidden { transform: translateY(110%); }
+
+.cookie-banner p {
+  font-size: 12px;
+  color: rgba(253,246,238,0.55);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.cookie-banner p a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.cookie-actions { display: flex; gap: 10px; flex-shrink: 0; }
+
+.cookie-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.cookie-btn.accept { background: var(--orange); color: var(--cream); }
+.cookie-btn.accept:hover { background: var(--coral); }
+.cookie-btn.decline { background: transparent; color: rgba(253,246,238,0.4); border: 1px solid rgba(253,246,238,0.15); }
+.cookie-btn.decline:hover { color: var(--cream); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  .section-wrap { padding: 0 24px; }
+  .hero-content { grid-template-columns: 1fr; padding: 0 24px; }
+  .hero-right { display: none; }
+  .concept-grid { grid-template-columns: 1fr; }
+  .concept-visual { height: 260px; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .personas { grid-template-columns: 1fr 1fr; }
+  .quotes-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 2px; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .faq-left h2 { position: static; margin-bottom: 36px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .types-header { grid-template-columns: 1fr; gap: 16px; }
+  footer { padding: 56px 24px 32px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .cookie-banner { flex-direction: column; align-items: flex-start; padding: 20px 24px; }
+}
+
+@media (max-width: 600px) {
+  #hero { padding-bottom: 60px; }
+  .steps { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .personas { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  #cta { padding: 72px 24px; }
+  #cta::before { font-size: 80px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Accessibility -->
+<a href="#main" class="skip-link">Ga naar inhoud</a>
+
+<!-- ─── NAVIGATIE ────────────────────────────────────── -->
+<nav id="mainNav" role="navigation" aria-label="Hoofdnavigatie">
+  <a href="#" class="nav-logo" aria-label="SoulScript homepage">Soul<span>Script</span></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#concept">Het concept</a></li>
+    <li><a href="#hoe-het-werkt">Hoe het werkt</a></li>
+    <li><a href="#verhalen">Verhalen</a></li>
+    <li><a href="#prijzen">Prijzen</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#start" class="nav-cta">Begin nu</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu openen" aria-expanded="false" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobiel menu">
+  <a href="#concept" onclick="closeMobileMenu()">Het concept</a>
+  <a href="#hoe-het-werkt" onclick="closeMobileMenu()">Hoe het werkt</a>
+  <a href="#verhalen" onclick="closeMobileMenu()">Verhalen</a>
+  <a href="#prijzen" onclick="closeMobileMenu()">Prijzen</a>
+  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="#start" class="m-cta" onclick="closeMobileMenu()">Begin nu</a>
+</div>
+
+<main id="main">
+
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section id="hero" aria-label="Introductie">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-horizon" aria-hidden="true"></div>
+  <div class="hero-sun" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Plan je after-party</p>
+      <h1 class="hero-h1">
+        Jij schrijft<br>
+        <em>de laatste akte.</em>
+      </h1>
+      <p class="hero-sub">
+        Leg jouw uitvaartwensen vast op een luchtige manier — zodat de mensen die van je houden zich alleen maar kunnen focussen op jou.
+      </p>
+      <div class="hero-actions">
+        <a href="#start" class="btn-primary">Mijn after-party plannen</a>
+        <a href="#hoe-het-werkt" class="btn-ghost">Hoe werkt het? →</a>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-stat">
+        <span class="stat-icon">⏱</span>
+        <span class="stat-label">
+          <strong>20 minuten</strong>
+          is alles wat het kost
+        </span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-icon">🔒</span>
+        <span class="stat-label">
+          <strong>Veilig opgeslagen</strong>
+          pas zichtbaar voor wie jij kiest
+        </span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-icon">✏️</span>
+        <span class="stat-label">
+          <strong>Altijd aanpasbaar</strong>
+          want je mag van mening veranderen
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ─── HET CONCEPT ──────────────────────────────────── -->
+<section id="concept" aria-labelledby="concept-title">
+  <div class="section-wrap" style="padding-top:120px; padding-bottom:120px;">
+    <div class="concept-grid reveal">
+      <div class="concept-left">
+        <p class="section-eyebrow">Het concept</p>
+        <h2 id="concept-title">
+          Elke goede party<br>
+          <em>heeft een organisator.</em>
+        </h2>
+        <p>
+          Iedereen plant een feestje. Je regelt een zaal, kiest muziek, beslist of er bitterballen komen. Je doet dat omdat je wil dat het goed gaat.
+        </p>
+        <p>
+          Waarom doe je dat dan niet voor het grootste feestje van je leven? Jouw after-party. Het enige feestje waar jij zelf niet meer achteraf kan klagen dat de muziek verkeerd was.
+        </p>
+        <p>
+          SoulScript geeft jou de pen. Jij schrijft de instructies. Het systeem voert ze uit — wanneer jij er niet meer bent.
+        </p>
+        <a href="#hoe-het-werkt" class="link-more">Lees hoe het werkt →</a>
+      </div>
+
+      <div class="concept-visual" aria-hidden="true">
+        <div class="concept-visual-bg"></div>
+        <div class="concept-visual-inner">
+          <span class="concept-soul">Soul</span>
+          <div class="concept-horizon"></div>
+          <span class="concept-script">Script</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOE HET WERKT ────────────────────────────────── -->
+<section id="hoe-het-werkt" aria-labelledby="hhw-title">
+  <div class="section-wrap">
+    <div class="reveal">
+      <p class="section-eyebrow" style="color:var(--gold);">Hoe het werkt</p>
+      <h2 class="hhw-title" id="hhw-title">
+        Vier stappen.<br><em>Een leven lang rust.</em>
+      </h2>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <span class="step-icon">✍️</span>
+        <h3>Maak een account aan</h3>
+        <p>Veilig, privé en in twee minuten klaar. Alleen jij hebt toegang — totdat jij anders besluit.</p>
+        <span class="step-connector" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <span class="step-icon">🎉</span>
+        <h3>Plan je after-party</h3>
+        <p>Muziek, outfit, locatie, speech, bloemen — jij kiest alles. In jouw tempo. Met een lach.</p>
+        <span class="step-connector" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <span class="step-icon">🔒</span>
+        <h3>Sla op &amp; bepaal toegang</h3>
+        <p>Kies wie jouw wensen mag zien, en wanneer. Niemand anders heeft toegang.</p>
+        <span class="step-connector" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <span class="step-icon">🌅</span>
+        <h3>Geniet van de zon</h3>
+        <p>Je hebt het geregeld. De rest mag genieten — en rouwen. Dat is het cadeau.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AFTER-PARTY TYPES ─────────────────────────────── -->
+<section id="after-party-types" aria-labelledby="types-title">
+  <div class="section-wrap">
+    <div class="types-header reveal">
+      <div>
+        <p class="section-eyebrow">Jouw stijl</p>
+        <h2 id="types-title">
+          Welk type<br>
+          <em>after-party ben jij?</em>
+        </h2>
+      </div>
+      <p>Van stille jazz club tot grote boerenbruiloft — jij bepaalt de sfeer. Ontdek welk type bij jou past en begin direct.</p>
+    </div>
+
+    <div class="personas reveal">
+      <div class="persona-card" role="button" tabindex="0" aria-label="De Stille Disco persona">
+        <span class="persona-emoji">🎧</span>
+        <p class="persona-name">De Stille Disco</p>
+        <p class="persona-desc">Intiem, een goede playlist, de juiste mensen. Geen toespraken. Alleen muziek en herinneringen.</p>
+        <span class="persona-tag">Rustig & muzikaal</span>
+      </div>
+      <div class="persona-card" role="button" tabindex="0" aria-label="De Jazz Club persona">
+        <span class="persona-emoji">🎷</span>
+        <p class="persona-name">De Jazz Club</p>
+        <p class="persona-desc">Live muziek, goede wijn, verhalen die beter worden naarmate de avond vordert.</p>
+        <span class="persona-tag">Stijlvol & warm</span>
+      </div>
+      <div class="persona-card" role="button" tabindex="0" aria-label="De Vip-Room persona">
+        <span class="persona-emoji">🥂</span>
+        <p class="persona-name">De Vip-Room</p>
+        <p class="persona-desc">Champagne. Dresscode. Dat ene outfit. Groot uitpakken voor de grote uitgang.</p>
+        <span class="persona-tag">Glamoureus & groots</span>
+      </div>
+      <div class="persona-card" role="button" tabindex="0" aria-label="De Boerenbruiloft persona">
+        <span class="persona-emoji">🌻</span>
+        <p class="persona-name">De Boerenbruiloft</p>
+        <p class="persona-desc">Iedereen welkom. Grote tafels, veel eten, bitterballen en daarna dansen. Verplicht.</p>
+        <span class="persona-tag">Uitbundig & feestelijk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VERHALEN ─────────────────────────────────────── -->
+<section id="verhalen" aria-labelledby="verhalen-title">
+  <div class="section-wrap">
+    <div class="reveal">
+      <p class="section-eyebrow">Verhalen</p>
+      <h2 class="verhalen-title" id="verhalen-title">
+        Mensen die het<br>
+        <em>al geregeld hebben.</em>
+      </h2>
+    </div>
+
+    <div class="quotes-grid reveal">
+      <div class="quote-block">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p class="quote-text">Ik heb er een uur over gedaan en nu slaap ik elke nacht beter. Niet omdat ik aan de dood dacht, maar omdat ik het van mijn lijst af had.</p>
+        <p class="quote-author">— Marieke, 54 jaar</p>
+      </div>
+      <div class="quote-block">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p class="quote-text">Mijn moeder had alles vastgelegd. We hoefden niets te regelen. We konden alleen maar bij haar zijn — in gedachten. Dat was het mooiste cadeau.</p>
+        <p class="quote-author">— Dochter van een gebruiker</p>
+      </div>
+      <div class="quote-block">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p class="quote-text">Ik heb geschreven dat er bitterballen moeten zijn. En Staying Alive van de Bee Gees. Voor de ironie. Mijn kinderen lachten toen ze het lazen.</p>
+        <p class="quote-author">— Jan, 67 jaar</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─────────────────────────────────────── -->
+<section id="features" aria-labelledby="features-title">
+  <div class="section-wrap">
+    <div class="features-header reveal">
+      <p class="section-eyebrow">Wat je krijgt</p>
+      <h2 id="features-title">
+        Alles wat je nodig hebt<br>
+        <em>voor een goede after-party.</em>
+      </h2>
+      <p>SoulScript dekt alles — van de outfit tot de afsluitmuziek. En meer.</p>
+    </div>
+
+    <div class="features-grid reveal">
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">👗</div>
+        <h3>Jouw laatste look</h3>
+        <p>Outfit, sieraden, haar, make-up, geur. Alles vastgelegd, tot in detail. Jij bepaalt hoe je eruitziet.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">🎵</div>
+        <h3>De perfecte soundtrack</h3>
+        <p>Het openingsnummer, de afsluiter, de verboden nummers. Nooit meer de verkeerde muziek.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">📍</div>
+        <h3>Locatie & sfeer</h3>
+        <p>Buiten, binnen, intiem of groot. Jij kiest de locatie en de stemming van je after-party.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">🍽️</div>
+        <h3>Het menu</h3>
+        <p>Bitterballen of sushi, champagne of limonade. Inclusief dieetwensen voor je gasten.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">✉️</div>
+        <h3>Jouw laatste woorden</h3>
+        <p>Een brief, een speech, een grap. Jij schrijft het. Wij bewaren het tot het moment daar is.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon" aria-hidden="true">🔒</div>
+        <h3>Veilig & privé</h3>
+        <p>Alleen zichtbaar voor wie jij kiest, wanneer jij dat kiest. Jij hebt altijd de controle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRIJZEN ──────────────────────────────────────── -->
+<section id="prijzen" aria-labelledby="pricing-title">
+  <div class="section-wrap">
+    <div class="reveal">
+      <p class="section-eyebrow">Prijzen</p>
+      <h2 class="pricing-title" id="pricing-title">
+        Regelen kost<br>
+        <em>maar weinig.</em>
+      </h2>
+    </div>
+
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <p class="pricing-plan">Gratis</p>
+        <p class="pricing-price"><span>€</span>0</p>
+        <p class="pricing-period">voor altijd</p>
+        <ul class="pricing-features" role="list">
+          <li>Basisvragen vastleggen</li>
+          <li>Outfit & muziek</li>
+          <li>Toegang voor 1 persoon</li>
+          <li class="disabled">Uitgebreide vragenlijst</li>
+          <li class="disabled">Nabestaanden-toegang</li>
+          <li class="disabled">Documentopslag</li>
+        </ul>
+        <a href="#start" class="pricing-btn outline">Begin gratis</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Meest gekozen</span>
+        <p class="pricing-plan">Compleet</p>
+        <p class="pricing-price"><span>€</span>4<span style="font-size:20px; vertical-align:baseline;">,99</span></p>
+        <p class="pricing-period">per maand</p>
+        <ul class="pricing-features" role="list">
+          <li>Volledige vragenlijst</li>
+          <li>Jouw laatste look</li>
+          <li>Muziek, locatie, menu</li>
+          <li>Nabestaanden-toegang instellen</li>
+          <li>Documenten opslaan</li>
+          <li class="disabled">Notariële verificatie</li>
+        </ul>
+        <a href="#start" class="pricing-btn filled">Begin nu</a>
+      </div>
+
+      <div class="pricing-card">
+        <p class="pricing-plan">Uitgebreid</p>
+        <p class="pricing-price"><span>€</span>9<span style="font-size:20px; vertical-align:baseline;">,99</span></p>
+        <p class="pricing-period">per maand</p>
+        <ul class="pricing-features" role="list">
+          <li>Alles uit Compleet</li>
+          <li>Notariële verificatie</li>
+          <li>Partner- of gezinstoegang</li>
+          <li>Uitvaartverzorger koppelen</li>
+          <li>Video-boodschappen opnemen</li>
+          <li>Prioriteitsondersteuning</li>
+        </ul>
+        <a href="#start" class="pricing-btn outline">Meer info</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ──────────────────────────────────────────── -->
+<section id="faq" aria-labelledby="faq-title">
+  <div class="section-wrap" style="padding-top:120px; padding-bottom:120px;">
+    <div class="faq-grid reveal">
+      <div class="faq-left">
+        <p class="section-eyebrow">FAQ</p>
+        <h2 id="faq-title">
+          Vragen die<br>je misschien<br>
+          <em>hebt.</em>
+        </h2>
+      </div>
+
+      <div class="faq-list" role="list">
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Is dit niet een beetje morbide?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>Helemaal niet. Het is eigenlijk best luchtig. Je denkt na over muziek, bitterballen en wat je wil dragen — niet over de dood zelf. De dood is de context, de after-party is het onderwerp. En die is best leuk om te plannen.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Wie kan mijn wensen zien?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>Alleen jij — totdat jij anders besluit. Jij bepaalt wie er toegang krijgt en wanneer. Je kunt een vertrouwenspersoon aanwijzen die pas toegang krijgt op een door jou bepaald moment.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Hoe lang duurt het invullen?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>Gemiddeld twintig minuten voor de basis. Maar je kunt ook in je eigen tempo werken — opslaan, later terugkomen, aanpassen. Er is geen tijdslimiet en je mag altijd van mening veranderen.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Wat als ik van gedachten verander?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>Dan pas je het aan. Zo simpel is het. Je kunt je wensen op elk moment wijzigen, aanvullen of verwijderen. Jij blijft altijd de eigenaar van jouw after-party.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Is dit juridisch bindend?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>De basisversie is een sterke morele richtlijn — een cadeau aan je nabestaanden. Het Uitgebreid-abonnement biedt notariële verificatie, waardoor jouw wensen een officieel karakter krijgen. Voor juridische vragen adviseren wij een notaris.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+            Werkt SoulScript internationaal?
+            <span class="faq-toggle" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <p>Ja. De vragenlijst is beschikbaar in meerdere talen en de inhoud is cultureel-neutraal opgebouwd. Welke religie, cultuur of traditie je ook hebt — jij vult in wat bij jou past.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA BAND ──────────────────────────────────────── -->
+<section id="cta" aria-labelledby="cta-title">
+  <h2 id="cta-title">Geniet van deze zon.</h2>
+  <p>Je weet maar nooit welke de laatste is. Maar jij hebt het geregeld.</p>
+  <a href="#start" class="btn-cta-light">Plan mijn after-party</a>
+</section>
+
+</main>
+
+<!-- ─── FOOTER ───────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand">Soul<span>Script</span></p>
+      <p class="footer-tagline">Plan je after-party voordat je laatste zon ondergaat. Jij schrijft de laatste akte — wij bewaren hem.</p>
+      <div class="footer-social" aria-label="Social media">
+        <a href="#" class="social-btn" aria-label="Instagram">📷</a>
+        <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-btn" aria-label="TikTok">▶</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Product</h4>
+      <ul role="list">
+        <li><a href="#hoe-het-werkt">Hoe het werkt</a></li>
+        <li><a href="#features">Wat je krijgt</a></li>
+        <li><a href="#prijzen">Prijzen</a></li>
+        <li><a href="#">Inloggen</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Bedrijf</h4>
+      <ul role="list">
+        <li><a href="#">Over ons</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Pers</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul role="list">
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Beveiliging</a></li>
+        <li><a href="#">Toegankelijkheid</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 SoulScript — KVK 12345678 — Alle rechten voorbehouden</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacybeleid</a>
+      <a href="#">Cookiebeleid</a>
+      <a href="#">Algemene voorwaarden</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── COOKIE BANNER ─────────────────────────────────── -->
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookiemelding" aria-live="polite">
+  <p>
+    Wij gebruiken cookies om jouw ervaring te verbeteren en anonieme statistieken bij te houden. Geen advertenties, geen gekke tracking.
+    <a href="#">Lees ons cookiebeleid.</a>
+  </p>
+  <div class="cookie-actions">
+    <button class="cookie-btn decline" onclick="closeCookie()">Alleen noodzakelijk</button>
+    <button class="cookie-btn accept" onclick="closeCookie()">Akkoord</button>
+  </div>
+</div>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  hamburger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('open', menuOpen);
+    hamburger.setAttribute('aria-expanded', menuOpen);
+  });
+
+  function closeMobileMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+  }
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('button').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  // Cookie banner
+  function closeCookie() {
+    document.getElementById('cookieBanner').classList.add('hidden');
+  }
+
+  // Persona cards — keyboard accessible
+  document.querySelectorAll('.persona-card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
