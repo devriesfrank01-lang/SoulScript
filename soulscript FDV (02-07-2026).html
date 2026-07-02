@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SoulScript — Plan je laatste feestje. Jouw after-party, jouw regels. Leg je wensen vast en geef de mensen om je heen het grootste cadeau: ruimte om gewoon verdrietig te zijn.">
+<title>SoulScript — Plan je laatste feestje</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--night);overflow-x:hidden}
+
+:root{
+  --night:#1A1025;
+  --twilight:#2C1A4A;
+  --orange:#C45E00;
+  --coral:#E8734A;
+  --gold:#F5A623;
+  --rose:#9E3060;
+  --cream:#FDF6EE;
+  --dusk:#F0E6D8;
+  --muted:#9A8878;
+  --border:rgba(196,94,0,.14);
+}
+
+/* ── SCROLL OFFSET (fixed nav compensation) ── */
+section[id], div[id]{scroll-margin-top:70px}
+
+/* ── SKIP ───────────────────────── */
+.skip{position:absolute;top:-99px;left:20px;background:var(--orange);color:var(--cream);padding:10px 20px;font-size:13px;z-index:9999;transition:top .2s;text-decoration:none}
+.skip:focus{top:20px}
+
+/* ── NAV ────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:70px;
+  transition:background .35s,box-shadow .35s;
+}
+#nav.solid{background:rgba(26,16,37,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(245,166,35,.1)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);text-decoration:none}
+.logo b{color:var(--gold);font-weight:400}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none;padding-right:56px}
+.nav-links a{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.5);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--orange);color:var(--cream)!important;padding:10px 24px;transition:background .2s!important}
+.nav-cta:hover{background:var(--coral)!important}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px}
+.burger span{display:block;width:22px;height:1.5px;background:var(--cream);border-radius:2px;transition:all .25s}
+.mob-menu{position:fixed;top:70px;left:0;right:0;background:var(--night);border-top:1px solid rgba(245,166,35,.1);padding:20px 32px 32px;z-index:299;display:none;flex-direction:column;gap:2px}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:16px;color:rgba(253,246,238,.65);text-decoration:none;padding:13px 0;border-bottom:1px solid rgba(245,166,35,.07);transition:color .2s}
+.mob-menu a:hover{color:var(--gold)}
+.mob-cta{background:var(--orange)!important;color:var(--cream)!important;text-align:center;padding:15px!important;margin-top:10px;border:none!important}
+
+/* ── SHARED ─────────────────────── */
+.wrap{max-width:1100px;margin:0 auto;padding:0 52px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
+.eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--orange)}
+.eyebrow.lt{color:var(--gold)}.eyebrow.lt::before{background:var(--gold)}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-r{opacity:0;transform:translateX(26px);transition:opacity .65s ease,transform .65s ease}
+.rv-r.in{opacity:1;transform:translateX(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+.btn-pri{background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-pri:hover{background:var(--coral);transform:translateY(-2px)}
+.btn-ghost{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,246,238,.45);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s,gap .2s}
+.btn-ghost:hover{color:var(--gold);gap:14px}
+
+/* ── HERO ───────────────────────── */
+#hero{min-height:100vh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding-bottom:88px}
+.hero-sky{position:absolute;inset:0;background:linear-gradient(175deg,#0E0819 0%,#1A1025 18%,#2C1A4A 40%,#9E3060 60%,#C45E00 75%,#F5A623 88%,#FDF6EE 100%)}
+.hero-grain{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;pointer-events:none}
+.hero-horizon{position:absolute;left:0;right:0;bottom:230px;height:1px;background:linear-gradient(90deg,transparent,var(--orange) 20%,var(--gold) 50%,var(--rose) 80%,transparent);opacity:.55}
+.hero-sun{position:absolute;bottom:222px;left:50%;transform:translateX(-50%);width:90px;height:45px;background:radial-gradient(ellipse at center bottom,#FFEF9F,var(--gold) 55%,transparent 100%);border-radius:90px 90px 0 0;opacity:.75}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-items:flex-end;gap:48px}
+.hero-pre{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);opacity:.8;margin-bottom:30px}
+.hero-pre::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+
+/* Big punchy headline */
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(50px,6vw,90px);font-weight:300;line-height:1.02;color:var(--cream);margin-bottom:28px}
+.hero-h1 em{font-style:italic;color:var(--gold);display:block}
+
+.hero-sub{font-size:15px;line-height:1.78;color:rgba(253,246,238,.5);max-width:420px;margin-bottom:48px}
+.hero-btns{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+
+/* Small honest note */
+.hero-note{
+  margin-top:32px;font-size:11.5px;
+  color:rgba(253,246,238,.3);line-height:1.6;max-width:380px;
+  border-left:2px solid rgba(245,166,35,.25);padding-left:14px;
+}
+.hero-note em{font-style:italic;color:rgba(245,166,35,.6)}
+
+.hero-cards{display:flex;flex-direction:column;gap:1px;align-self:flex-end}
+.h-card{background:rgba(26,16,37,.6);backdrop-filter:blur(10px);border:1px solid rgba(245,166,35,.13);padding:20px 26px;display:flex;align-items:center;gap:18px;opacity:0;animation:cardIn .5s ease forwards}
+.h-card:nth-child(1){animation-delay:.5s}.h-card:nth-child(2){animation-delay:.65s}.h-card:nth-child(3){animation-delay:.8s}
+@keyframes cardIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+.h-card-ico{font-size:22px;flex-shrink:0}
+.h-card-txt{font-size:12px;color:rgba(253,246,238,.42);line-height:1.45}
+.h-card-txt strong{display:block;font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:var(--cream);font-weight:400}
+.scroll-cue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;opacity:.38;animation:bob 2.2s ease-in-out infinite;pointer-events:none}
+.scroll-cue span{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream)}
+.scroll-cue::after{content:'↓';color:var(--gold);font-size:13px}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ── BRUTAL TRUTH BAND ──────────── */
+/* A single punchy line that breaks the page */
+#truth{
+  background:var(--orange);padding:28px 0;
+  overflow:hidden;position:relative;
+}
+.truth-ticker{
+  display:flex;gap:0;white-space:nowrap;
+  animation:ticker 22s linear infinite;
+  width:max-content;
+}
+.truth-ticker span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-style:italic;
+  color:var(--cream);padding:0 48px;opacity:.9;
+}
+.truth-ticker span b{font-weight:400;color:var(--night);font-style:normal;background:var(--cream);padding:2px 10px;font-size:14px;letter-spacing:.08em;vertical-align:middle;margin:0 6px}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── CONCEPT ────────────────────── */
+#concept{background:var(--cream);padding:130px 0}
+.concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+
+.concept-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:300;line-height:1.15;color:var(--night);margin-bottom:26px}
+.concept-left h2 em{font-style:italic;color:var(--orange)}
+
+/* Casual paragraph style with personality */
+.concept-left p{font-size:15px;line-height:1.78;color:var(--muted);margin-bottom:16px;max-width:440px}
+.concept-left p strong{color:var(--night);font-weight:500}
+
+/* Aside callout — a bit cheeky */
+.aside-note{
+  background:var(--twilight);padding:20px 24px;margin:28px 0;
+  border-left:3px solid var(--gold);
+}
+.aside-note p{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--cream);line-height:1.6;margin:0}
+.aside-note p b{font-style:normal;color:var(--gold);font-weight:400}
+
+.more-link{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);text-decoration:none;margin-top:14px;transition:gap .2s}
+.more-link:hover{gap:14px}
+
+.concept-vis{background:var(--twilight);height:400px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.cv-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 85%,rgba(196,94,0,.22) 0%,transparent 60%)}
+.cv-inner{text-align:center;position:relative;z-index:1}
+.cv-soul{font-family:'Cormorant Garamond',serif;font-size:108px;font-weight:300;font-style:italic;color:var(--cream);line-height:1;display:block}
+.cv-line{width:100%;height:2px;margin:4px 0;background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--coral) 50%,var(--rose) 70%,transparent)}
+.cv-script{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:400;letter-spacing:.32em;color:var(--orange);text-transform:uppercase;display:block}
+
+/* ── HOW IT WORKS ───────────────── */
+#how{background:var(--night);padding:130px 0}
+.how-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,58px);font-weight:300;color:var(--cream);max-width:540px;margin-bottom:16px}
+.how-h2 em{font-style:italic;color:var(--gold)}
+.how-sub{font-size:14px;color:rgba(253,246,238,.4);margin-bottom:64px;max-width:420px;line-height:1.65}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(245,166,35,.07)}
+.step{background:var(--night);padding:44px 32px;position:relative;transition:background .2s}
+.step:hover{background:rgba(44,26,74,.55)}
+.step-n{font-family:'Cormorant Garamond',serif;font-size:68px;font-style:italic;color:var(--orange);opacity:.18;line-height:1;margin-bottom:22px}
+.step-ico{font-size:28px;display:block;margin-bottom:18px}
+.step h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-style:italic;color:var(--cream);margin-bottom:10px;line-height:1.2}
+.step p{font-size:13px;color:rgba(253,246,238,.42);line-height:1.65}
+.step-arr{position:absolute;top:54px;right:-11px;color:var(--orange);font-size:18px;opacity:.28;z-index:2}
+
+/* ── THE GIFT SECTION ───────────── */
+/* New section: the real emotional core */
+#gift{background:var(--dusk);padding:130px 0}
+.gift-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.gift-left{position:relative}
+
+.gift-big-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:240px;font-weight:300;font-style:italic;
+  color:var(--orange);opacity:.07;
+  position:absolute;top:-40px;left:-20px;
+  line-height:1;pointer-events:none;user-select:none;
+}
+
+.gift-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,56px);font-weight:300;line-height:1.15;color:var(--night);margin-bottom:26px;position:relative}
+.gift-left h2 em{font-style:italic;color:var(--orange)}
+.gift-left p{font-size:15px;line-height:1.78;color:var(--muted);margin-bottom:16px;max-width:440px;position:relative}
+.gift-left p strong{color:var(--night);font-weight:500}
+
+.gift-cards{display:flex;flex-direction:column;gap:1px}
+.gift-card{
+  background:white;padding:28px 32px;
+  display:flex;gap:22px;align-items:flex-start;
+  border:1px solid rgba(196,94,0,.1);
+  transition:border-color .2s,transform .15s;
+  position:relative;
+}
+.gift-card:hover{border-color:var(--orange);transform:translateX(4px)}
+.gift-card-ico{font-size:26px;flex-shrink:0;margin-top:2px}
+.gift-card-txt h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--night);margin-bottom:6px}
+.gift-card-txt p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ── PERSONAS ───────────────────── */
+#types{background:var(--night);padding:130px 0}
+.types-top{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:56px}
+.types-top h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,56px);font-weight:300;line-height:1.15;color:var(--cream)}
+.types-top h2 em{font-style:italic;color:var(--gold)}
+.types-top p{font-size:14px;line-height:1.72;color:rgba(253,246,238,.4);align-self:end}
+
+.personas{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(245,166,35,.07)}
+.persona{background:var(--night);padding:34px 26px;cursor:pointer;position:relative;overflow:hidden;transition:background .2s}
+.persona::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .28s}
+.persona:hover{background:rgba(44,26,74,.6)}
+.persona:hover::after{transform:scaleX(1)}
+.p-ico{font-size:38px;display:block;margin-bottom:18px}
+.p-name{font-family:'Cormorant Garamond',serif;font-size:23px;font-style:italic;color:var(--cream);margin-bottom:8px}
+.p-desc{font-size:12.5px;color:rgba(253,246,238,.4);line-height:1.55}
+.p-tag{display:inline-block;margin-top:18px;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);background:rgba(245,166,35,.08);padding:4px 10px}
+
+/* ── STORIES ────────────────────── */
+#stories{background:var(--cream);padding:130px 0}
+.stories-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,54px);font-weight:300;color:var(--night);margin-bottom:60px;max-width:500px}
+.stories-h2 em{font-style:italic;color:var(--orange)}
+
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(196,94,0,.07)}
+.quote{background:var(--cream);padding:52px 38px;position:relative;transition:background .2s}
+.quote:hover{background:white}
+.q-mark{font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--orange);opacity:.12;line-height:1;margin-bottom:6px}
+.q-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--night);line-height:1.62;margin-bottom:26px}
+.q-who{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);opacity:.55}
+
+/* ── FEATURES ───────────────────── */
+#features{background:var(--twilight);padding:130px 0}
+.feat-head{margin-bottom:72px}
+.feat-head h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,56px);font-weight:300;color:var(--cream);margin-bottom:14px}
+.feat-head h2 em{font-style:italic;color:var(--gold)}
+.feat-head p{font-size:14px;color:rgba(253,246,238,.4);max-width:440px;line-height:1.7}
+
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(245,166,35,.07)}
+.feat{background:var(--twilight);padding:46px 38px;transition:background .2s}
+.feat:hover{background:rgba(44,26,74,.5)}
+.feat-ico{width:46px;height:46px;background:rgba(245,166,35,.1);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:22px}
+.feat h3{font-family:'Cormorant Garamond',serif;font-size:23px;font-style:italic;color:var(--cream);margin-bottom:10px}
+.feat p{font-size:13px;color:rgba(253,246,238,.42);line-height:1.65}
+
+/* ── PRICING ────────────────────── */
+#pricing{background:var(--dusk);padding:130px 0}
+.pricing-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4vw,54px);font-weight:300;color:var(--night);margin-bottom:16px;max-width:480px}
+.pricing-h2 em{font-style:italic;color:var(--orange)}
+.pricing-sub{font-size:14px;color:var(--muted);margin-bottom:56px;max-width:400px;line-height:1.65}
+
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.price-card{background:white;padding:50px 38px;position:relative;border:1px solid rgba(196,94,0,.1);transition:border-color .2s,transform .15s}
+.price-card:hover{border-color:var(--orange);transform:translateY(-3px)}
+.price-card.feat-card{background:var(--twilight);border-color:transparent}
+.price-badge{position:absolute;top:20px;right:20px;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;background:var(--gold);color:var(--night);padding:4px 10px}
+.price-plan{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:18px}
+.price-card.feat-card .price-plan{color:var(--gold)}
+.price-amt{font-family:'Cormorant Garamond',serif;font-size:58px;font-weight:300;color:var(--night);line-height:1;margin-bottom:4px}
+.price-card.feat-card .price-amt{color:var(--cream)}
+.price-amt sup{font-size:20px;vertical-align:super;color:var(--muted)}
+.price-amt sub{font-size:20px;vertical-align:baseline}
+.price-per{font-size:12px;color:var(--muted);margin-bottom:36px}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:38px}
+.price-feats li{font-size:13px;color:var(--muted);padding-left:20px;position:relative;line-height:1.5}
+.price-card.feat-card .price-feats li{color:rgba(253,246,238,.6)}
+.price-feats li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-size:11px}
+.price-feats li.off{opacity:.3;text-decoration:line-through}
+.price-feats li.off::before{content:'—';color:var(--muted)}
+.price-btn{display:block;text-align:center;padding:14px;font-family:'DM Sans',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.price-btn.out{border:1px solid var(--border);color:var(--muted)}
+.price-btn.out:hover{border-color:var(--orange);color:var(--orange)}
+.price-btn.fill{background:var(--orange);color:var(--cream)}
+.price-btn.fill:hover{background:var(--coral)}
+
+/* ── FAQ ────────────────────────── */
+#faq{background:var(--night);padding:130px 0}
+.faq-grid{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start}
+.faq-left h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.5vw,50px);font-weight:300;line-height:1.2;color:var(--cream);position:sticky;top:90px}
+.faq-left h2 em{font-style:italic;color:var(--gold)}
+/* Small cheeky subtext under FAQ heading */
+.faq-left .faq-note{font-size:13px;color:rgba(253,246,238,.3);line-height:1.6;margin-top:16px;font-style:italic;max-width:220px}
+
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:1px solid rgba(245,166,35,.1)}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:24px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:21px;font-style:italic;color:var(--cream);transition:color .2s}
+.faq-q:hover{color:var(--gold)}
+.faq-plus{font-size:22px;color:var(--gold);font-style:normal;font-family:'DM Sans',sans-serif;flex-shrink:0;transition:transform .25s}
+.faq-item.open .faq-plus{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-a{max-height:320px}
+.faq-a p{font-size:14px;color:rgba(253,246,238,.45);line-height:1.75;padding-bottom:26px}
+
+/* ── CTA BAND ───────────────────── */
+#cta{background:var(--orange);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+#cta::before{content:'AFTERPARTY';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:170px;font-style:italic;color:rgba(253,246,238,.055);white-space:nowrap;pointer-events:none;letter-spacing:.04em}
+.cta-inner{position:relative;z-index:1}
+#cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5.5vw,72px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:16px}
+#cta p{font-size:15px;color:rgba(253,246,238,.68);margin-bottom:48px;line-height:1.6;max-width:500px;margin-left:auto;margin-right:auto}
+.btn-light{background:var(--cream);color:var(--orange);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:18px 52px;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-light:hover{background:var(--dusk);transform:translateY(-2px)}
+
+/* ── FOOTER ─────────────────────── */
+footer{background:var(--night);padding:80px 52px 44px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;border-bottom:1px solid rgba(245,166,35,.08);margin-bottom:36px}
+.f-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:var(--cream);margin-bottom:16px}
+.f-brand b{color:var(--gold);font-weight:400}
+.f-tag{font-size:13px;color:rgba(253,246,238,.3);line-height:1.65;max-width:270px;margin-bottom:28px}
+.f-social{display:flex;gap:10px}
+.f-soc{width:36px;height:36px;border:1px solid rgba(245,166,35,.18);display:flex;align-items:center;justify-content:center;font-size:13px;color:rgba(253,246,238,.35);text-decoration:none;transition:border-color .2s,color .2s}
+.f-soc:hover{border-color:var(--gold);color:var(--gold)}
+.f-col h4{font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.f-col ul li a{font-size:13px;color:rgba(253,246,238,.36);text-decoration:none;transition:color .2s}
+.f-col ul li a:hover{color:var(--gold)}
+.footer-bot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-bot p{font-size:11px;color:rgba(253,246,238,.18);letter-spacing:.05em}
+.foot-links{display:flex;gap:22px}
+.foot-links a{font-size:11px;color:rgba(253,246,238,.18);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--gold)}
+
+/* ── COOKIE ─────────────────────── */
+.cookie{position:fixed;bottom:0;left:0;right:0;background:rgba(44,26,74,.97);backdrop-filter:blur(12px);border-top:1px solid rgba(245,166,35,.12);padding:20px 52px;z-index:400;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:transform .35s}
+.cookie.gone{transform:translateY(110%)}
+.cookie p{font-size:12px;color:rgba(253,246,238,.5);line-height:1.55;max-width:600px}
+.cookie p a{color:var(--gold);text-decoration:none}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+.ck-btn{font-family:'DM Sans',sans-serif;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;padding:10px 22px;cursor:pointer;border:none;transition:all .2s}
+.ck-ok{background:var(--orange);color:var(--cream)}.ck-ok:hover{background:var(--coral)}
+.ck-no{background:transparent;color:rgba(253,246,238,.38);border:1px solid rgba(253,246,238,.12)}.ck-no:hover{color:var(--cream)}
+
+/* ── RESPONSIVE ─────────────────── */
+@media(max-width:960px){
+  #nav{padding:0 24px}.nav-links{display:none}.burger{display:flex}
+  .wrap{padding:0 24px}
+  .hero-inner{grid-template-columns:1fr}.hero-cards{display:none}
+  .concept-grid,.gift-grid{grid-template-columns:1fr}
+  .concept-vis{height:260px}
+  .steps,.personas{grid-template-columns:1fr 1fr}
+  .types-top,.types-top{grid-template-columns:1fr}
+  .quotes,.feat-grid{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}.faq-left h2{position:static;margin-bottom:40px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  footer{padding:56px 24px 36px}
+  .footer-bot{flex-direction:column;align-items:flex-start}
+  .cookie{flex-direction:column;align-items:flex-start;padding:20px 24px}
+}
+@media(max-width:560px){
+  .steps,.feat-grid,.personas,.price-grid,.footer-top{grid-template-columns:1fr}
+  #cta::before{font-size:72px}
+  #cta{padding:72px 24px}
+}
+
+
+/* Radio rows in registration */
+.radio-row{display:flex;align-items:center;gap:14px;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.1);padding:16px 20px;cursor:pointer;transition:background .18s,border-color .18s;}
+.radio-row:hover{background:rgba(44,26,74,.8);border-color:rgba(245,166,35,.3);}
+.radio-row.checked{background:rgba(196,94,0,.18);border-color:var(--orange);}
+.radio-label{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--cream);}
+
+
+/* ── AVATAR DROPDOWN ── */
+.avatar-menu-item{display:flex;align-items:center;gap:12px;width:100%;padding:10px 20px;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.06em;color:rgba(253,246,238,.6);text-align:left;transition:background .15s,color .15s;}
+.avatar-menu-item:hover{background:rgba(44,26,74,.7);color:var(--cream);}
+.ami-soon{color:rgba(253,246,238,.3)!important;cursor:default;}
+.ami-soon:hover{background:none!important;color:rgba(253,246,238,.3)!important;}
+.ami-lock{margin-left:auto;font-size:11px;opacity:.4;}
+.ami-badge{margin-left:auto;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:rgba(196,94,0,.25);color:var(--orange);padding:2px 8px;border:1px solid rgba(196,94,0,.3);}
+
+
+/* ── MIJN ZAKEN MODULE ── */
+.zaken-sectie{border:1px solid rgba(245,166,35,.1);margin-bottom:2px;overflow:hidden;transition:border-color .2s;}
+.zaken-sectie:hover{border-color:rgba(245,166,35,.22);}
+.zaken-sectie-header{display:flex;align-items:flex-start;gap:20px;padding:28px 32px;cursor:pointer;background:rgba(44,26,74,.3);transition:background .18s;}
+.zaken-sectie-header:hover{background:rgba(44,26,74,.6);}
+.zaken-ico{font-size:28px;flex-shrink:0;margin-top:2px;}
+.zaken-h3{font-family:"Cormorant Garamond",serif;font-size:22px;font-style:italic;color:var(--cream);margin-bottom:5px;}
+.zaken-sub{font-size:12px;color:rgba(253,246,238,.35);line-height:1.5;}
+.zaken-body{padding:24px 32px 28px;background:rgba(26,16,37,.5);border-top:1px solid rgba(245,166,35,.07);}
+.zaken-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;}
+.zaken-input{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:"DM Sans",sans-serif;font-size:14px;padding:14px 20px;outline:none;transition:border-color .2s;display:block;}
+.zaken-input:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7);}
+.zaken-input::placeholder{color:rgba(253,246,238,.22);}
+.zaken-textarea{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:"DM Sans",sans-serif;font-size:13px;padding:14px 20px;resize:vertical;min-height:90px;line-height:1.7;outline:none;transition:border-color .2s;}
+.zaken-textarea:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7);}
+.zaken-textarea::placeholder{color:rgba(253,246,238,.22);}
+.ztag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(245,166,35,.15);color:rgba(253,246,238,.45);cursor:pointer;transition:all .18s;background:transparent;font-family:"DM Sans",sans-serif;}
+.ztag:hover{border-color:rgba(245,166,35,.45);color:var(--cream);}
+.ztag.selected{background:rgba(196,94,0,.2);border-color:var(--orange);color:var(--cream);}
+.ztoggle{font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:10px 24px;border:1px solid rgba(245,166,35,.15);color:rgba(253,246,238,.35);cursor:pointer;background:transparent;font-family:"DM Sans",sans-serif;transition:all .18s;}
+.ztoggle.active{background:rgba(196,94,0,.2);border-color:var(--orange);color:var(--cream);}
+@media(max-width:600px){.zaken-sectie-header{padding:20px 20px;}.zaken-body{padding:18px 20px 22px;}}
+
+/* ── QUIZ OVERLAY ── */
+#quiz-overlay.open{display:flex!important}
+.quiz-wrap{min-height:unset!important;padding:0!important}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--night);color:var(--cream);overflow-x:hidden;min-height:100vh}
+
+:root{
+  --night:#1A1025;
+  --twilight:#2C1A4A;
+  --orange:#C45E00;
+  --coral:#E8734A;
+  --gold:#F5A623;
+  --rose:#9E3060;
+  --cream:#FDF6EE;
+  --dusk:#F0E6D8;
+  --muted:#9A8878;
+  --border:rgba(196,94,0,.18);
+}
+
+/* NAV */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:70px;
+  background:rgba(26,16,37,.97);backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 rgba(245,166,35,.1);
+}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);text-decoration:none}
+.logo b{color:var(--gold);font-weight:400}
+.nav-back{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.45);text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s}
+.nav-back:hover{color:var(--gold)}
+
+/* PROGRESS */
+.progress-wrap{
+  position:fixed;top:70px;left:0;right:0;z-index:299;
+  background:rgba(26,16,37,.95);border-bottom:1px solid rgba(245,166,35,.08);
+  padding:14px 52px;
+}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-section{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)}
+.progress-count{font-size:11px;color:rgba(253,246,238,.3)}
+.progress-bar{height:2px;background:rgba(245,166,35,.1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));transition:width .5s ease;width:0%}
+
+/* LAYOUT */
+.quiz-wrap{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:160px 52px 80px;
+}
+.quiz-inner{max-width:680px;width:100%}
+
+/* SLIDE */
+.slide{display:none}
+.slide.active{display:block;animation:fadeUp .45s ease forwards}
+@keyframes fadeUp{from{opacity:0;margin-top:20px}to{opacity:1;margin-top:0}}
+
+.slide-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.slide-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--orange)}
+.slide-q{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);font-weight:300;line-height:1.18;color:var(--cream);margin-bottom:12px}
+.slide-q em{font-style:italic;color:var(--gold)}
+.slide-hint{font-size:13px;color:rgba(253,246,238,.35);margin-bottom:40px;line-height:1.6}
+
+/* CHOICES */
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
+.choice{
+  background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.1);
+  padding:22px 24px;cursor:pointer;
+  display:flex;align-items:flex-start;gap:16px;
+  transition:background .18s,border-color .18s,transform .15s;
+  text-align:left;font-family:'DM Sans',sans-serif;position:relative;
+}
+.choice:hover{background:rgba(44,26,74,.8);border-color:rgba(245,166,35,.3);transform:translateX(3px)}
+.choice.selected{background:rgba(196,94,0,.18);border-color:var(--orange)}
+.choice-ico{font-size:24px;flex-shrink:0;margin-top:2px}
+.choice-label{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px}
+.choice-sub{font-size:12px;color:rgba(253,246,238,.38);line-height:1.45}
+
+/* SLIDER */
+.slider-wrap{margin:8px 0 20px}
+.slider-labels{display:flex;justify-content:space-between;margin-bottom:16px}
+.slider-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(253,246,238,.35)}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:rgba(245,166,35,.15);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--orange);cursor:pointer;box-shadow:0 0 0 4px rgba(196,94,0,.2);transition:background .2s}
+input[type=range]::-webkit-slider-thumb:hover{background:var(--gold)}
+.slider-value{text-align:center;margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--gold)}
+
+/* TEXTAREA & INPUT */
+textarea{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;padding:20px 24px;resize:vertical;min-height:140px;line-height:1.7;transition:border-color .2s;outline:none}
+textarea::placeholder{color:rgba(253,246,238,.22)}
+textarea:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7)}
+.text-input{width:100%;background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;padding:16px 24px;line-height:1.7;transition:border-color .2s;outline:none;display:block}
+.text-input::placeholder{color:rgba(253,246,238,.22)}
+.text-input:focus{border-color:rgba(245,166,35,.4);background:rgba(44,26,74,.7)}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px 18px;border:1px solid rgba(245,166,35,.15);color:rgba(253,246,238,.45);cursor:pointer;transition:all .18s;background:transparent;font-family:'DM Sans',sans-serif}
+.tag:hover{border-color:rgba(245,166,35,.45);color:var(--cream)}
+.tag.selected{background:rgba(196,94,0,.2);border-color:var(--orange);color:var(--cream)}
+
+/* NAV BUTTONS */
+.slide-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+  width:100%;max-width:680px;box-sizing:border-box;padding:20px 52px;
+  background:#1A1025;border-top:1px solid rgba(245,166,35,.12);
+  z-index:50;
+}
+.quiz-inner{padding-bottom:140px}
+.btn-prev{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,246,238,.3);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:'DM Sans',sans-serif;transition:color .2s;padding:0}
+.btn-prev:hover{color:var(--gold)}
+.btn-next{background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-next:hover{background:var(--coral);transform:translateY(-2px)}
+
+/* SECTION INTRO */
+.section-intro{text-align:center;padding:20px 0}
+.section-intro .big-ico{font-size:56px;display:block;margin-bottom:28px}
+.section-intro h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--cream);margin-bottom:16px;line-height:1.15}
+.section-intro h2 em{font-style:italic;color:var(--gold)}
+.section-intro p{font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:460px;margin:0 auto 36px}
+.divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 36px}
+
+/* FINISH */
+.finish{text-align:center;padding:20px 0}
+.finish .finish-ico{font-size:64px;display:block;margin-bottom:28px}
+.finish h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,54px);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:16px}
+.finish h2 em{color:var(--gold)}
+.finish p{font-size:14px;color:rgba(253,246,238,.45);line-height:1.72;max-width:480px;margin:0 auto 40px}
+.finish-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-finish-pri{background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;text-decoration:none;display:inline-block;border:none;cursor:pointer;transition:background .2s}
+.btn-finish-pri:hover{background:var(--coral)}
+.btn-finish-sec{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(253,246,238,.35);background:none;border:1px solid rgba(253,246,238,.12);padding:16px 28px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .2s}
+.btn-finish-sec:hover{color:var(--cream)}
+
+/* RESPONSIVE */
+@media(max-width:760px){
+  #nav{padding:0 24px}
+  .progress-wrap{padding:14px 24px}
+  .quiz-wrap{padding:150px 24px 80px}
+  .choices{grid-template-columns:1fr}
+  .slide-nav{padding:16px 24px}
+}
+@media(max-width:480px){
+  .slide-nav{flex-direction:column-reverse;gap:12px;align-items:stretch}
+  .btn-next{text-align:center}
+  .btn-prev{justify-content:center}
+  .quiz-inner{padding-bottom:200px}
+}
+
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">Ga naar inhoud</a>
+
+<!-- ── NAV ──────────────────────────────────────────── -->
+<nav id="nav" role="navigation" aria-label="Hoofdnavigatie">
+  <a href="#" class="logo" aria-label="SoulScript homepage">Soul<b>Script</b></a>
+  <ul class="nav-links" role="list">
+    <li><a href="#concept">Het idee</a></li>
+    <li><a href="#how">Hoe het werkt</a></li>
+    <li><a href="#stories">Verhalen</a></li>
+    <li><a href="#pricing">Prijzen</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#" class="nav-cta" onclick="openQuiz();return false;">Plan je feestje</a></li>
+    <li id="guest-avatar-wrap" style="position:relative;">
+      <button id="guest-avatar-btn" onclick="toggleGuestMenu()" aria-label="Account menu" aria-haspopup="true" aria-expanded="false" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--rose));border:2px solid rgba(245,166,35,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--cream);transition:border-color .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(245,166,35,.4)'">
+        <span aria-hidden="true">👤</span>
+      </button>
+      <div id="guest-menu" style="display:none;position:absolute;top:52px;right:0;min-width:220px;background:rgba(26,16,37,.98);border:1px solid rgba(245,166,35,.18);box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9001;overflow:hidden;">
+        <div style="padding:6px 0;">
+          <button onclick="toggleGuestMenu();openLogin();" class="avatar-menu-item"><span style="font-size:15px;">🔑</span><span>Inloggen</span></button>
+          <button onclick="toggleGuestMenu();openQuiz();setTimeout(()=>qGoTo(8),80)" class="avatar-menu-item"><span style="font-size:15px;">✨</span><span>Maak een account</span></button>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <button class="burger" aria-label="Menu openen" aria-expanded="false" id="burgerBtn">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mob-menu" id="mobMenu" role="dialog" aria-label="Mobiel menu">
+  <a href="#concept" onclick="closeMenu()">Het idee</a>
+  <a href="#how" onclick="closeMenu()">Hoe het werkt</a>
+  <a href="#stories" onclick="closeMenu()">Verhalen</a>
+  <a href="#pricing" onclick="closeMenu()">Prijzen</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#" class="mob-cta" onclick="closeMenu();openQuiz();return false;" onclick="closeMenu()">Plan je feestje →</a>
+</div>
+
+<main id="main">
+
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section id="hero" aria-labelledby="hero-h1">
+  <div class="hero-sky" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-horizon" aria-hidden="true"></div>
+  <div class="hero-sun" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-pre" aria-hidden="true">Jouw after-party, jouw regels</p>
+        <h1 class="hero-h1" id="hero-h1">
+          Je gaat er<br>
+          toch een keer uit.<br>
+          <em>Doe het op jouw manier.</em>
+        </h1>
+        <p class="hero-sub">
+          SoulScript helpt je om je laatste feestje alvast te regelen — zonder zwaarte, met ruimte voor jouw verhaal. Jij schrijft het script. Anderen voeren uit.
+        </p>
+        <div class="hero-btns">
+          <a href="#" class="btn-pri" onclick="openQuiz();return false;">Ja, ik regel dit</a>
+          <a href="#how" class="btn-ghost">Hoe dan? →</a>
+        </div>
+        <p class="hero-note">
+          Geen uitvaartverzekering. Geen juridisch document.<br>
+          <em>Gewoon jouw wensen, vastgelegd zodat anderen dat niet hoeven te gokken.</em>
+        </p>
+      </div>
+      <div class="hero-cards" aria-hidden="true">
+        <div class="h-card">
+          <span class="h-card-ico">⏱</span>
+          <span class="h-card-txt"><strong>20 minuten</strong>is alles wat het kost</span>
+        </div>
+        <div class="h-card">
+          <span class="h-card-ico">🔒</span>
+          <span class="h-card-txt"><strong>Veilig opgeslagen</strong>pas zichtbaar voor wie jij kiest</span>
+        </div>
+        <div class="h-card">
+          <span class="h-card-ico">✏️</span>
+          <span class="h-card-txt"><strong>Altijd aanpasbaar</strong>want je mag van mening veranderen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span></div>
+</section>
+
+<!-- ── TICKER ───────────────────────────────────────── -->
+<div id="truth" aria-hidden="true">
+  <div class="truth-ticker">
+    <span>Bitterballen of niet<b>jij beslist</b></span>
+    <span>De muziek<b>jouw keuze</b></span>
+    <span>De outfit<b>van jou</b></span>
+    <span>De speech<b>door wie jij wilt</b></span>
+    <span>De bloemen<b>geen witte lelies tenzij jij dat wil</b></span>
+    <span>Bitterballen of niet<b>jij beslist</b></span>
+    <span>De muziek<b>jouw keuze</b></span>
+    <span>De outfit<b>van jou</b></span>
+    <span>De speech<b>door wie jij wilt</b></span>
+    <span>De bloemen<b>geen witte lelies tenzij jij dat wil</b></span>
+  </div>
+</div>
+
+<!-- ── CONCEPT ──────────────────────────────────────── -->
+<section id="concept" aria-labelledby="concept-h2">
+  <div class="wrap">
+    <div class="concept-grid">
+      <div class="concept-left rv">
+        <p class="eyebrow">Het idee</p>
+        <h2 id="concept-h2">
+          Plan je feestje.<br>
+          <em>Het laatste feestje.</em>
+        </h2>
+        <p>
+          Je bent heel goed in plannen. Je hebt een testament, een levensverzekering, waarschijnlijk zelfs een schoonmaakrooster. Maar wie kiest de afsluitmuziek?
+        </p>
+        <p>
+          <strong>Niemand. Tenzij jij het regelt.</strong> En dat is precies het probleem. Op het moment dat jij er niet meer bent, moeten de mensen die van je houden ineens beslissen over dingen die ze geen idee van hebben. Terwijl ze eigenlijk gewoon verdrietig willen zijn.
+        </p>
+
+        <div class="aside-note">
+          <p>Jij schrijft het script. Anderen voeren uit.<br><b>Dat is het cadeau.</b></p>
+        </div>
+
+        <p>
+          SoulScript is geen uitvaartverzekering en geen saai juridisch document. Het is een plek waar jij, op jouw manier, vertelt hoe jouw laatste feestje eruitziet. Met humor als je wil. Met ernst als je moet. Zonder drempel.
+        </p>
+        <a href="#" class="more-link" onclick="openQuiz();return false;">Begin nu — het kost 20 minuten →</a>
+      </div>
+
+      <div class="concept-vis rv-r" aria-hidden="true">
+        <div class="cv-bg"></div>
+        <div class="cv-inner">
+          <span class="cv-soul">Soul</span>
+          <div class="cv-line"></div>
+          <span class="cv-script">Script</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ─────────────────────────────────── -->
+<section id="how" aria-labelledby="how-h2">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow lt">Hoe het werkt</p>
+      <h2 class="how-h2" id="how-h2">Vier stappen.<br><em>Een leven lang rust.</em></h2>
+      <p class="how-sub">Geen ingewikkeld gedoe. Geen notaris. Geen nare gesprekken. Gewoon jij, een scherm en twintig minuten.</p>
+    </div>
+    <div class="steps rv">
+      <div class="step">
+        <div class="step-n">01</div>
+        <span class="step-ico">✍️</span>
+        <h3>Account aanmaken</h3>
+        <p>Veilig, privé, twee minuten. Alleen jij hebt toegang — totdat jij anders besluit.</p>
+        <span class="step-arr" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <span class="step-ico">🎉</span>
+        <h3>Jouw feestje plannen</h3>
+        <p>Muziek, outfit, locatie, speech, bitterballen — jij kiest alles. In jouw tempo. Met plezier.</p>
+        <span class="step-arr" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <span class="step-ico">🔒</span>
+        <h3>Opslaan & toegang regelen</h3>
+        <p>Kies wie jouw wensen mag zien en wanneer. Jij houdt de regie — ook hierin.</p>
+        <span class="step-arr" aria-hidden="true">→</span>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <span class="step-ico">🌅</span>
+        <h3>Genieten van de zon</h3>
+        <p>Je hebt het geregeld. Nu kunnen zij gewoon verdrietig zijn. Dat is het punt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE REAL GIFT ─────────────────────────────────── -->
+<section id="gift" aria-labelledby="gift-h2">
+  <div class="wrap">
+    <div class="gift-grid">
+      <div class="gift-left rv">
+        <div class="gift-big-num" aria-hidden="true">♡</div>
+        <p class="eyebrow">Het echte cadeau</p>
+        <h2 id="gift-h2">
+          Jij geeft ze<br>
+          <em>ruimte.</em>
+        </h2>
+        <p>
+          Op het moment dat jij er niet meer bent, hoeven de mensen om je heen <strong>niet te beslissen</strong>. Geen discussies over bloemen. Geen ruzie over de muziek. Geen twijfel of je het zo wel goed doen.
+        </p>
+        <p>
+          Ze kunnen rouwen. Lachen om jouw slechte grappen. Verhalen ophalen. Gewoon bij elkaar zijn.
+        </p>
+        <p>
+          <strong>Dat is wat jij ze geeft als je dit regelt.</strong> Niet een uitvaartwens. Ruimte.
+        </p>
+      </div>
+      <div class="gift-cards rv-r d1">
+        <div class="gift-card">
+          <span class="gift-card-ico">😮‍💨</span>
+          <div class="gift-card-txt">
+            <h3>Geen stress over keuzes</h3>
+            <p>Muziek, bloemen, catering — jij hebt het al besloten. Zij hoeven alleen maar te komen.</p>
+          </div>
+        </div>
+        <div class="gift-card">
+          <span class="gift-card-ico">💬</span>
+          <div class="gift-card-txt">
+            <h3>Geen discussies</h3>
+            <p>Iedereen in de familie heeft een mening. Jij ook. En die van jou wint — want jij hebt het opgeschreven.</p>
+          </div>
+        </div>
+        <div class="gift-card">
+          <span class="gift-card-ico">😢</span>
+          <div class="gift-card-txt">
+            <h3>Ruimte om verdrietig te zijn</h3>
+            <p>De regeltjes zijn al geregeld. Zij mogen gewoon voelen wat ze voelen.</p>
+          </div>
+        </div>
+        <div class="gift-card">
+          <span class="gift-card-ico">😂</span>
+          <div class="gift-card-txt">
+            <h3>En om te lachen</h3>
+            <p>Om jouw (slechte) grappen. Om de verhalen. Om wie jij was. Dat is ook rouwen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TYPES ─────────────────────────────────────────── -->
+<section id="types" aria-labelledby="types-h2">
+  <div class="wrap">
+    <div class="types-top rv">
+      <div>
+        <p class="eyebrow lt">Jouw stijl</p>
+        <h2 id="types-h2">Welk type after-party<br><em>ben jij?</em></h2>
+      </div>
+      <p>Groot of intiem, serieus of uitbundig — het maakt niet uit. Zolang het maar van jou is.</p>
+    </div>
+    <div class="personas rv">
+      <article class="persona" tabindex="0" role="button" aria-label="De Stille Disco">
+        <span class="p-ico">🎧</span>
+        <p class="p-name">De Stille Disco</p>
+        <p class="p-desc">Intiem, een goede playlist, de juiste mensen. Geen toespraken. Alleen muziek en herinneringen.</p>
+        <span class="p-tag">Rustig & muzikaal</span>
+      </article>
+      <article class="persona" tabindex="0" role="button" aria-label="De Jazz Club">
+        <span class="p-ico">🎷</span>
+        <p class="p-name">De Jazz Club</p>
+        <p class="p-desc">Live muziek, goede wijn, verhalen die beter worden naarmate de avond vordert.</p>
+        <span class="p-tag">Stijlvol & warm</span>
+      </article>
+      <article class="persona" tabindex="0" role="button" aria-label="De Vip-Room">
+        <span class="p-ico">🥂</span>
+        <p class="p-name">De Vip-Room</p>
+        <p class="p-desc">Champagne. Dresscode. Groot uitpakken voor de grote uitgang. Want je gaat er maar één keer uit.</p>
+        <span class="p-tag">Glamoureus & groots</span>
+      </article>
+      <article class="persona" tabindex="0" role="button" aria-label="De Boerenbruiloft">
+        <span class="p-ico">🌻</span>
+        <p class="p-name">De Boerenbruiloft</p>
+        <p class="p-desc">Iedereen welkom. Grote tafels, veel eten, bitterballen en daarna dansen. Verplicht.</p>
+        <span class="p-tag">Uitbundig & feestelijk</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORIES ───────────────────────────────────────── -->
+<section id="stories" aria-labelledby="stories-h2">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Verhalen</p>
+      <h2 class="stories-h2" id="stories-h2">
+        Mensen die het<br>
+        <em>al geregeld hebben.</em>
+      </h2>
+    </div>
+    <div class="quotes rv">
+      <div class="quote">
+        <div class="q-mark" aria-hidden="true">"</div>
+        <p class="q-text">Ik heb er een uur over gedaan en nu slaap ik elke nacht beter. Niet omdat ik aan de dood dacht. Gewoon omdat ik het van mijn lijst af had.</p>
+        <p class="q-who">— Marieke, 54 jaar</p>
+      </div>
+      <div class="quote">
+        <div class="q-mark" aria-hidden="true">"</div>
+        <p class="q-text">Mijn moeder had alles vastgelegd. We hoefden niets te regelen. We konden alleen maar bij haar zijn. Dat was het mooiste cadeau dat ze ons kon geven.</p>
+        <p class="q-who">— Dochter van een gebruiker</p>
+      </div>
+      <div class="quote">
+        <div class="q-mark" aria-hidden="true">"</div>
+        <p class="q-text">Ik heb geschreven dat er bitterballen moeten zijn. En Staying Alive van de Bee Gees. Voor de ironie. Mijn kinderen lachten toen ze het lazen. Dat was precies de bedoeling.</p>
+        <p class="q-who">— Jan, 67 jaar</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ──────────────────────────────────────── -->
+<section id="features" aria-labelledby="feat-h2">
+  <div class="wrap">
+    <div class="feat-head rv">
+      <p class="eyebrow lt">Wat je vastlegt</p>
+      <h2 id="feat-h2">Alles wat telt<br><em>op die dag.</em></h2>
+      <p>Van de grote dingen tot de kleine — jij bepaalt wat er in jouw script staat.</p>
+    </div>
+    <div class="feat-grid rv">
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">👗</div>
+        <h3>Jouw laatste look</h3>
+        <p>Outfit, sieraden, haar, make-up. Zodat niemand hoeft te gokken wat jij zou hebben gewild.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">🎵</div>
+        <h3>De soundtrack</h3>
+        <p>Openingsnummer, afsluiter, verboden nummers. Jouw afspeellijst, jouw regels.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">📍</div>
+        <h3>Locatie & sfeer</h3>
+        <p>Buiten, binnen, intiem of groots. Jij kiest de plek en het gevoel van jouw feestje.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">🍽️</div>
+        <h3>Eten & drinken</h3>
+        <p>Bitterballen of niet — jij beslist. Inclusief dieetwensen voor de mensen die je achterlaat.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">✉️</div>
+        <h3>Jouw woorden</h3>
+        <p>Een brief, een grap, een speech. Jij schrijft het — wij bewaren het tot het moment daar is.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico" aria-hidden="true">🔒</div>
+        <h3>Veilig & van jou</h3>
+        <p>Alleen zichtbaar voor wie jij kiest, wanneer jij dat kiest. Altijd aanpasbaar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ───────────────────────────────────────── -->
+<section id="pricing" aria-labelledby="pricing-h2">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Prijzen</p>
+      <h2 class="pricing-h2" id="pricing-h2">Minder dan een<br><em>Netflix-abonnement.</em></h2>
+      <p class="pricing-sub">En met iets dat je écht iets oplevert. Begin gratis — upgrade als je meer wil.</p>
+    </div>
+    <div class="price-grid rv">
+      <div class="price-card">
+        <p class="price-plan">Gratis</p>
+        <p class="price-amt"><sup>€</sup>0</p>
+        <p class="price-per">voor altijd</p>
+        <ul class="price-feats" role="list">
+          <li>Basiswensen vastleggen</li>
+          <li>Outfit & muziek kiezen</li>
+          <li>Toegang voor 1 persoon</li>
+          <li class="off">Uitgebreide vragenlijst</li>
+          <li class="off">Nabestaanden-toegang</li>
+          <li class="off">Documenten opslaan</li>
+        </ul>
+        <a href="#" class="price-btn out">Begin gratis</a>
+      </div>
+      <div class="price-card feat-card">
+        <span class="price-badge">Meest gekozen</span>
+        <p class="price-plan">Compleet</p>
+        <p class="price-amt"><sup>€</sup>4<sub>,99</sub></p>
+        <p class="price-per">per maand — opzegbaar wanneer je wil</p>
+        <ul class="price-feats" role="list">
+          <li>Volledige vragenlijst</li>
+          <li>Jouw laatste look</li>
+          <li>Muziek, locatie & menu</li>
+          <li>Nabestaanden-toegang instellen</li>
+          <li>Documenten opslaan</li>
+          <li class="off">Notariële verificatie</li>
+        </ul>
+        <a href="#" class="price-btn fill">Begin nu</a>
+      </div>
+      <div class="price-card">
+        <p class="price-plan">Uitgebreid</p>
+        <p class="price-amt"><sup>€</sup>9<sub>,99</sub></p>
+        <p class="price-per">per maand</p>
+        <ul class="price-feats" role="list">
+          <li>Alles uit Compleet</li>
+          <li>Notariële verificatie</li>
+          <li>Partner- of gezinstoegang</li>
+          <li>Uitvaartverzorger koppelen</li>
+          <li>Video-boodschappen opnemen</li>
+          <li>Prioriteitsondersteuning</li>
+        </ul>
+        <a href="#" class="price-btn out">Meer info</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ───────────────────────────────────────────── -->
+<section id="faq" aria-labelledby="faq-h2">
+  <div class="wrap">
+    <div class="faq-grid">
+      <div class="faq-left rv">
+        <p class="eyebrow lt">FAQ</p>
+        <h2 id="faq-h2">Ja,<br>je mag<br>het<br><em>gewoon vragen.</em></h2>
+        <p class="faq-note">De doodgewone vragen die je hebt maar misschien niet durfde te stellen.</p>
+      </div>
+
+      <div class="faq-list rv d1" role="list">
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Is dit niet een beetje zwaar?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>Nee. Het voelt misschien zo — maar de mensen die het invullen zeggen bijna altijd dat het lichter voelt dan verwacht. Je denkt na over muziek, bitterballen en wat je wil dragen. Niet over de dood zelf. En als je klaar bent, heb je iets nuttigs gedaan voor de mensen van je houdt. Dat voelt goed.</p></div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Wie kan mijn wensen zien?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>Alleen jij — totdat jij anders besluit. Jij kiest wie toegang krijgt en wanneer. Je kunt een vertrouwenspersoon aanwijzen die er pas bij kan op het moment dat jij dat wil. Niemand snuffelt mee.</p></div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Moet ik het in één keer invullen?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>Absoluut niet. Je kunt stoppen wanneer je wil, opslaan, morgen verder. Of over een jaar. Er is geen tijdslimiet en je mag altijd van gedachten veranderen. Jouw wensen van nu zijn niet je wensen voor altijd.</p></div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Is dit juridisch bindend?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>De basisversie is een sterke morele richtlijn — en eerlijk gezegd houden de meeste nabestaanden zich er gewoon aan, omdat het van jou komt. Het Uitgebreid-abonnement biedt notariële verificatie voor wie dat wil. Voor echte juridische vragen: raadpleeg een notaris.</p></div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Wat als mijn familie het er toch niet mee eens is?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>Dan hebben ze pech. Grapje — maar serieus: als jij het opschrijft, geeft het je nabestaanden iets om op terug te vallen. "Dit wilde hij/zij zelf." Dat is een krachtig argument. En precies waarom SoulScript werkt: het haalt de discussie weg door jouw stem erin te houden.</p></div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-q" aria-expanded="false" onclick="faq(this)">
+            Werkt SoulScript ook als ik niet religieus ben?
+            <span class="faq-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region"><p>Ja. En ook als je wel religieus bent. De vragenlijst is bewust open — jij vult in wat bij jou past. Geen aannames, geen verplicht format. Of je nu een kerkdienst wil of een feest in een kroeg: allebei kan.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ───────────────────────────────────────────── -->
+<section id="cta" aria-labelledby="cta-h2">
+  <div class="cta-inner">
+    <h2 id="cta-h2">Geniet van deze zon.</h2>
+    <p>Je weet maar nooit welke de laatste is. Maar als jij dit regelt, mogen de mensen om je heen straks gewoon van je houden. En dat is alles wat telt.</p>
+    <a href="#" class="btn-light" onclick="openQuiz();return false;">Plan mijn after-party — het kost 20 minuten</a>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ────────────────────────────────────────── -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <p class="f-brand">Soul<b>Script</b></p>
+        <p class="f-tag">Plan je laatste feestje. Jouw after-party, jouw regels. Wij bewaren het script totdat het nodig is.</p>
+        <div class="f-social" aria-label="Volg ons">
+          <a href="#" class="f-soc" aria-label="Instagram">📷</a>
+          <a href="#" class="f-soc" aria-label="LinkedIn">in</a>
+          <a href="#" class="f-soc" aria-label="TikTok">▶</a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Product</h4>
+        <ul role="list">
+          <li><a href="#how">Hoe het werkt</a></li>
+          <li><a href="#features">Wat je vastlegt</a></li>
+          <li><a href="#pricing">Prijzen</a></li>
+          <li><a href="#" onclick="openLogin();return false;">Inloggen</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Bedrijf</h4>
+        <ul role="list">
+          <li><a href="#">Over ons</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Pers</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4>Support</h4>
+        <ul role="list">
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Beveiliging</a></li>
+          <li><a href="#">Toegankelijkheid</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <p>© 2025 SoulScript — KVK 12345678 — Alle rechten voorbehouden</p>
+      <div class="foot-links">
+        <a href="#">Privacybeleid</a>
+        <a href="#">Cookiebeleid</a>
+        <a href="#">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── COOKIE ─────────────────────────────────────────── -->
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookiemelding">
+  <p>Wij gebruiken cookies om jouw ervaring te verbeteren en anonieme statistieken bij te houden. Geen advertenties. <a href="#">Lees ons cookiebeleid.</a></p>
+  <div class="cookie-btns">
+    <button class="ck-btn ck-no" onclick="dismissCookie()">Alleen noodzakelijk</button>
+    <button class="ck-btn ck-ok" onclick="dismissCookie()">Akkoord</button>
+  </div>
+</div>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
+const btn=document.getElementById('burgerBtn'),mob=document.getElementById('mobMenu');
+let open=false;
+btn.addEventListener('click',()=>{open=!open;mob.classList.toggle('open',open);btn.setAttribute('aria-expanded',open)});
+function closeMenu(){open=false;mob.classList.remove('open');btn.setAttribute('aria-expanded',false)}
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.rv,.rv-r').forEach(el=>ro.observe(el));
+function faq(b){const item=b.closest('.faq-item'),was=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(i=>{i.classList.remove('open');i.querySelector('button').setAttribute('aria-expanded','false')});if(!was){item.classList.add('open');b.setAttribute('aria-expanded','true')}}
+document.querySelectorAll('.persona').forEach(p=>p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();p.click()}}));
+function dismissCookie(){document.getElementById('cookie').classList.add('gone')}
+</script>
+
+<!-- ══ VRAGENLIJST OVERLAY ══ -->
+<div id="quiz-overlay" role="dialog" aria-modal="true" aria-label="Plan je feestje" style="position:fixed;inset:0;z-index:500;background:#1A1025;display:none;flex-direction:column;overflow-y:auto;">
+
+  <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:70px;flex-shrink:0;background:rgba(26,16,37,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(245,166,35,.1);">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:#FDF6EE;">Soul<b style="color:#F5A623;font-weight:400;">Script</b></span>
+    <button onclick="closeQuiz()" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.35);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .2s;margin-right:56px;" onmouseover="this.style.color='rgba(245,166,35,.8)'" onmouseout="this.style.color='rgba(253,246,238,.35)'">← Home</button>
+  </div>
+
+  <div style="flex-shrink:0;background:rgba(26,16,37,.95);border-bottom:1px solid rgba(245,166,35,.08);padding:14px 52px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span id="q-section" style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#C45E00;">Welkom</span>
+      <span id="q-count" style="font-size:11px;color:rgba(253,246,238,.3);"></span>
+    </div>
+    <div style="height:2px;background:rgba(245,166,35,.1);"><div id="q-fill" style="height:100%;background:linear-gradient(90deg,#C45E00,#F5A623);transition:width .5s ease;width:0%;"></div></div>
+  </div>
+
+  <div style="flex:1;display:flex;align-items:flex-start;justify-content:center;padding:60px 52px 80px;">
+  <div id="quiz-slides-wrap" style="max-width:680px;width:100%;">
+<div class="quiz-wrap">
+<div class="quiz-inner">
+
+<!-- WELKOM -->
+<div class="slide active" data-section="Welkom">
+  <div class="section-intro">
+    <span class="big-ico">🌅</span>
+    <h2>Jij schrijft<br><em>het script.</em></h2>
+    <div class="divider-line"></div>
+    <p>Dit duurt zo'n 15 à 20 minuten. Je mag stoppen wanneer je wil en later verder. Er zijn geen foute antwoorden — alleen jouw antwoorden.</p>
+  </div>
+  <div class="slide-nav">
+    <span></span>
+    <button class="btn-next" onclick="qNext()">Begin →</button>
+  </div>
+</div>
+
+<!-- DE BASIS INTRO -->
+<div class="slide" data-section="De basis">
+  <div class="section-intro">
+    <span class="big-ico">📋</span>
+    <h2>Eerst de <em>basics.</em></h2>
+    <div class="divider-line"></div>
+    <p>Vijf snelle keuzes die alles in gang zetten. Geen druk — jij beslist.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 1: OPBAREN -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q">Manier van <em>opbaren?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🏠</span>
+      <div>
+        <span class="choice-label">Lekker in mijn eigen bedje</span>
+        <span class="choice-sub">Oost, west, thuis best.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🛎️</span>
+      <div>
+        <span class="choice-label">Een luxe hotelbed</span>
+        <span class="choice-sub">Maar dan wel met roomservice graag.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 2: TYPE UITVAART -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q">Type <em>uitvaart?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">⚰️</span>
+      <div>
+        <span class="choice-label">Zand erover</span>
+        <span class="choice-sub">Terug naar de basis.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🔥</span>
+      <div>
+        <span class="choice-label">De fik erin</span>
+        <span class="choice-sub">Altijd al van vuurwerk gehouden.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 3: DONOR -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Donor?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">💚</span>
+      <div>
+        <span class="choice-label">Deel mij maar uit</span>
+        <span class="choice-sub">Mijn motor loopt nog soepel.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🔒</span>
+      <div>
+        <span class="choice-label">Alles compleet houden</span>
+        <span class="choice-sub">Alleen mijn humor mag iemand erven.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 4: BUDGET -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Budget?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🥂</span>
+      <div>
+        <span class="choice-label">Spend er maar op los</span>
+        <span class="choice-sub">De eindafrekening komt toch niet bij mij terecht.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🐖</span>
+      <div>
+        <span class="choice-label">Zo skeer mogelijk</span>
+        <span class="choice-sub">Blijft er meer geld over voor mijn dierbaren.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- VRAAG 5: BERICHTGEVING -->
+<div class="slide" data-section="De basis">
+  <p class="slide-eyebrow">De basis</p>
+  <h2 class="slide-q"><em>Berichtgeving?</em></h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">📣</span>
+      <div>
+        <span class="choice-label">Breaking news</span>
+        <span class="choice-sub">Op de socials, in de krant, schreeuw het van de daken.</span>
+      </div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">💌</span>
+      <div>
+        <span class="choice-label">Uitnodiging voor definitieve afscheidsparty</span>
+        <span class="choice-sub">Laten we het een beetje exclusive houden.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+
+<!-- BASIS KLAAR -->
+<div class="slide" data-section="Basisvragen klaar!">
+  <div style="text-align:center;padding:10px 0 30px;">
+    <span style="font-size:56px;display:block;margin-bottom:24px;">🎉</span>
+    <p style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);display:inline-flex;align-items:center;gap:10px;margin-bottom:20px;"><span style="display:block;width:24px;height:1px;background:var(--orange);"></span>Basisvragen voltooid</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,48px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px;">Jij hebt de basis<br><em style="font-style:italic;color:var(--gold);">geregeld.</em></h2>
+    <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 24px;"></div>
+    <p style="font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:460px;margin:0 auto 36px;">Je basiswensen zijn ingevuld. Hieronder kun je ze direct downloaden, mailen of delen — <strong style="color:rgba(253,246,238,.7);">SoulScript slaat niets op van deze sessie.</strong></p>
+  </div>
+
+  <!-- Download / Deel opties -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-bottom:40px;">
+
+    <button onclick="downloadAntwoorden()" style="display:flex;flex-direction:column;align-items:center;gap:12px;background:rgba(44,26,74,.5);border:1px solid rgba(245,166,35,.15);padding:24px 16px;cursor:pointer;text-align:center;transition:background .18s,border-color .18s;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='rgba(44,26,74,.85)';this.style.borderColor='rgba(245,166,35,.35)'" onmouseout="this.style.background='rgba(44,26,74,.5)';this.style.borderColor='rgba(245,166,35,.15)'">
+      <span style="font-size:30px;">📄</span>
+      <div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Download</span>
+        <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.5;">Sla op als bestand op je apparaat.</span>
+      </div>
+    </button>
+
+    <button onclick="mailAntwoorden()" style="display:flex;flex-direction:column;align-items:center;gap:12px;background:rgba(44,26,74,.5);border:1px solid rgba(245,166,35,.15);padding:24px 16px;cursor:pointer;text-align:center;transition:background .18s,border-color .18s;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='rgba(44,26,74,.85)';this.style.borderColor='rgba(245,166,35,.35)'" onmouseout="this.style.background='rgba(44,26,74,.5)';this.style.borderColor='rgba(245,166,35,.15)'">
+      <span style="font-size:30px;">✉️</span>
+      <div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Mailen</span>
+        <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.5;">Stuur naar jezelf of iemand anders.</span>
+      </div>
+    </button>
+
+    <button onclick="deelWhatsapp()" style="display:flex;flex-direction:column;align-items:center;gap:12px;background:rgba(44,26,74,.5);border:1px solid rgba(245,166,35,.15);padding:24px 16px;cursor:pointer;text-align:center;transition:background .18s,border-color .18s;font-family:'DM Sans',sans-serif;" onmouseover="this.style.background='rgba(44,26,74,.85)';this.style.borderColor='rgba(245,166,35,.35)'" onmouseout="this.style.background='rgba(44,26,74,.5)';this.style.borderColor='rgba(245,166,35,.15)'">
+      <span style="font-size:30px;">💬</span>
+      <div>
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">WhatsApp</span>
+        <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.5;">Stuur naar iemand die je vertrouwt.</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Geen opslag melding -->
+  <div style="background:rgba(196,94,0,.08);border:1px solid rgba(196,94,0,.2);border-left:3px solid var(--orange);padding:16px 20px;margin-bottom:36px;">
+    <p style="font-size:12px;color:rgba(253,246,238,.5);line-height:1.7;"><strong style="color:rgba(253,246,238,.75);">ℹ️ Let op:</strong> SoulScript slaat jouw antwoorden in deze sessie <strong style="color:rgba(253,246,238,.75);">niet op</strong>. Maak een gratis account aan om je wensen veilig te bewaren, aan te passen en te delen met de mensen die je kiest.</p>
+  </div>
+
+  <!-- Account unlock teaser -->
+  <div style="margin-bottom:8px;">
+    <p style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;">Met een gratis account unlock je:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(44,26,74,.3);border:1px solid rgba(245,166,35,.1);padding:20px 22px;">
+        <span style="font-size:26px;">🎗️</span>
+        <div>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Feestcommissie</span>
+          <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.55;">Wijs vertrouwde mensen aan die jouw wensen mogen inzien na jouw overlijden.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(44,26,74,.3);border:1px solid rgba(245,166,35,.1);padding:20px 22px;">
+        <span style="font-size:26px;">🔐</span>
+        <div>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Mijn Zaken</span>
+          <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.55;">Leg vast waar je bankrekeningen, crypto, pensioen en eigendommen staan.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(44,26,74,.3);border:1px solid rgba(245,166,35,.1);padding:20px 22px;">
+        <span style="font-size:26px;">👥</span>
+        <div>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Gastenlijst</span>
+          <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.55;">Stel je eigen gastenlijst samen met naam, telefoon en social media.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;background:rgba(44,26,74,.3);border:1px solid rgba(245,166,35,.1);padding:20px 22px;">
+        <span style="font-size:26px;">✏️</span>
+        <div>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--cream);display:block;margin-bottom:4px;">Opslaan & bewerken</span>
+          <span style="font-size:11px;color:rgba(253,246,238,.35);line-height:1.55;">Bewaar en pas je antwoorden veilig aan wanneer je wil.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn-next" onclick="qNext();qNext()" style="background:rgba(44,26,74,.6);border:1px solid rgba(245,166,35,.2);color:rgba(253,246,238,.6);">Doorgaan zonder account →</button>
+      <button class="btn-next" onclick="qNext()" style="">Account aanmaken →</button>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTRATIE -->
+<div class="slide" data-section="Registratie" id="slide-registratie">
+  <p class="slide-eyebrow">Bijna klaar met de basis</p>
+  <h2 class="slide-q">Maak jouw <em>gratis account</em> aan.</h2>
+  <p class="slide-hint">Je wensen worden veilig opgeslagen en zijn alleen zichtbaar voor wie jij dat wilt. Na registratie sturen we je een bevestigingsmail.</p>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:8px;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Voornaam *</label>
+        <input id="reg-voornaam" type="text" class="text-input" placeholder="Jouw voornaam" />
+      </div>
+      <div>
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Achternaam *</label>
+        <input id="reg-achternaam" type="text" class="text-input" placeholder="Jouw achternaam" />
+      </div>
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">E-mailadres *</label>
+      <input id="reg-email" type="email" class="text-input" placeholder="jouw@email.nl" />
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Telefoonnummer</label>
+      <input id="reg-telefoon" type="tel" class="text-input" placeholder="+31 6 12345678" />
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Geboortedatum *</label>
+        <input id="reg-geboortedatum" type="date" class="text-input" style="color-scheme:dark;" />
+      </div>
+      <div>
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Geslacht</label>
+        <select id="reg-geslacht" class="text-input" style="cursor:pointer;appearance:none;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23F5A623' stroke-width='1.5' fill='none'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 16px center;">
+          <option value="" style="background:#2C1A4A;">Kies...</option>
+          <option value="man" style="background:#2C1A4A;">Man</option>
+          <option value="vrouw" style="background:#2C1A4A;">Vrouw</option>
+          <option value="anders" style="background:#2C1A4A;">Anders / niet invullen</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Wachtwoord *</label>
+      <input id="reg-wachtwoord" type="password" class="text-input" placeholder="Minimaal 8 tekens" />
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Herhaal wachtwoord *</label>
+      <input id="reg-wachtwoord2" type="password" class="text-input" placeholder="Zelfde wachtwoord nogmaals" />
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Woonplaats</label>
+      <input id="reg-woonplaats" type="text" class="text-input" placeholder="Stad of adres" />
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:12px;">Gezinssituatie</label>
+      <div style="display:flex;flex-direction:column;gap:2px;" id="grp-gezin">
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-gezin" value="alleen" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Alleen staand</span></label>
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-gezin" value="partner" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Partner</span></label>
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-gezin" value="kinderen" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Kinderen</span></label>
+      </div>
+    </div>
+
+    <div>
+      <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:12px;">Familie</label>
+      <div style="display:flex;flex-direction:column;gap:2px;" id="grp-familie">
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-familie" value="beide-ouders" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Beide ouders nog in leven</span></label>
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-familie" value="een-ouder" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Eén ouder nog in leven</span></label>
+        <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="reg-familie" value="geen-ouders" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><span class="radio-label">Ouders niet meer in leven</span></label>
+      </div>
+    </div>
+
+    <div id="reg-error" style="display:none;background:rgba(158,48,96,.2);border:1px solid rgba(158,48,96,.4);padding:12px 16px;font-size:13px;color:#E8734A;"></div>
+
+    <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-top:4px;">
+      <input id="reg-akkoord" type="checkbox" style="margin-top:3px;accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" />
+      <span style="font-size:12px;color:rgba(253,246,238,.35);line-height:1.6;">Ik ga akkoord met de <a href="#" style="color:var(--gold);text-decoration:none;">algemene voorwaarden</a> en het <a href="#" style="color:var(--gold);text-decoration:none;">privacybeleid</a>.</span>
+    </label>
+  </div>
+
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="submitRegistratie()">Account aanmaken →</button>
+  </div>
+</div>
+
+<!-- REGISTRATIE BEVESTIGING -->
+<div class="slide" data-section="Registratie" id="slide-bevestiging">
+  <div class="section-intro">
+    <span class="big-ico">📬</span>
+    <h2>Check je <em>inbox.</em></h2>
+    <div class="divider-line"></div>
+    <p>We hebben een bevestigingsmail gestuurd naar <strong id="reg-email-display" style="color:var(--gold);font-style:normal;"></strong>.<br><br>Klik op de link in de mail om je account te bevestigen en verder te gaan met de vragenlijst.</p>
+  </div>
+  <div style="background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.12);padding:20px 24px;margin-bottom:8px;text-align:left;">
+    <p style="font-size:12px;color:rgba(253,246,238,.35);line-height:1.7;">Geen mail ontvangen? Controleer je spam-map of <button onclick="qPrev();qPrev()" style="background:none;border:none;color:var(--gold);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;padding:0;text-decoration:underline;">vul je e-mailadres opnieuw in.</button></p>
+  </div>
+  <div class="slide-nav">
+    <span></span>
+    <button class="btn-next" onclick="qNext()" style="background:rgba(44,26,74,.6);border:1px solid rgba(245,166,35,.2);">Ik heb bevestigd, ga verder →</button>
+  </div>
+</div>
+
+<!-- MUZIEK INTRO -->
+<div class="slide" data-section="Muziek & soundtrack">
+  <div class="section-intro">
+    <span class="big-ico">🎵</span>
+    <h2><em>Muziek</em><br>& soundtrack</h2>
+    <div class="divider-line"></div>
+    <p>Wat er gespeeld wordt op jouw dag. Van het eerste nummer tot het laatste.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Wat is het eerste nummer als mensen <em>binnenkomen?</em></h2>
+  <p class="slide-hint">Dit zet de toon voor alles. Denk aan een artiest, liedje, of gevoel.</p>
+  <input type="text" class="text-input" placeholder="Bijv. 'Here Comes the Sun' van The Beatles..." />
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Wat is de sfeer van jouw <em>soundtrack?</em></h2>
+  <p class="slide-hint">Kies de toon die het beste bij jou past.</p>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🎷</span>
+      <div><span class="choice-label">Soulvol & warm</span><span class="choice-sub">Jazz, soul, klassiek — iets dat diep gaat.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🎉</span>
+      <div><span class="choice-label">Feestelijk & dansbaar</span><span class="choice-sub">Pop, disco, iedereen op de dansvloer.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🌿</span>
+      <div><span class="choice-label">Rustig & intiem</span><span class="choice-sub">Akoestisch, zachte singer-songwriter.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🎸</span>
+      <div><span class="choice-label">Hard & onvergetelijk</span><span class="choice-sub">Rock, iets dat blijft hangen.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Muziek & soundtrack">
+  <p class="slide-eyebrow">Muziek & soundtrack</p>
+  <h2 class="slide-q">Is er een nummer dat <em>absoluut verboden</em> is?</h2>
+  <p class="slide-hint">Optioneel — maar als er iets is dat je nooit wil horen op jouw dag, schrijf het op.</p>
+  <textarea placeholder="Bijv. 'My Heart Will Go On' — alsjeblieft niet..."></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- OUTFIT INTRO -->
+<div class="slide" data-section="Outfit & uiterlijk">
+  <div class="section-intro">
+    <span class="big-ico">👗</span>
+    <h2><em>Outfit</em><br>& uiterlijk</h2>
+    <div class="divider-line"></div>
+    <p>Jouw laatste look. Zodat niemand hoeft te gokken wat jij zou hebben gedragen.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Hoe formeel is jouw <em>laatste look?</em></h2>
+  <p class="slide-hint">Schuif naar wat bij jou past.</p>
+  <div class="slider-wrap">
+    <div class="slider-labels">
+      <span class="slider-label">Casual & comfortabel</span>
+      <span class="slider-label">Gekleed & stijlvol</span>
+    </div>
+    <input type="range" min="0" max="100" value="50" oninput="updateSlider(this,'outfit-formeel',['Heel casual','Eerder casual','Ergens in het midden','Eerder gekleed','Heel gekleed & stijlvol'])" />
+    <p class="slider-value" id="outfit-formeel">Ergens in het midden</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Beschrijf jouw <em>outfit</em> — zo specifiek of vaag als je wil.</h2>
+  <p class="slide-hint">Kleur, stijl, een specifiek kledingstuk — alles helpt.</p>
+  <textarea placeholder="Bijv. 'Mijn favoriete blauwe jurk, met de zilveren ketting van mijn moeder...'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Outfit & uiterlijk">
+  <p class="slide-eyebrow">Outfit & uiterlijk</p>
+  <h2 class="slide-q">Wil je een <em>dresscode</em> voor de aanwezigen?</h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🎨</span>
+      <div><span class="choice-label">Kleur verplicht</span><span class="choice-sub">Geen zwart. Ik wil kleur zien.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">⚫</span>
+      <div><span class="choice-label">Traditioneel zwart</span><span class="choice-sub">Stijlvol en rustig.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">✨</span>
+      <div><span class="choice-label">Gekleed & feestelijk</span><span class="choice-sub">Alsof ze naar een bruiloft gaan.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">👟</span>
+      <div><span class="choice-label">Kom zoals je bent</span><span class="choice-sub">Lekker casual, geen gedoe.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- LOCATIE INTRO -->
+<div class="slide" data-section="Locatie & sfeer">
+  <div class="section-intro">
+    <span class="big-ico">📍</span>
+    <h2><em>Locatie</em><br>& sfeer</h2>
+    <div class="divider-line"></div>
+    <p>Waar wil jij dat het feestje plaatsvindt? Wat voor gevoel moet de ruimte geven?</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Waar wil jij jouw <em>feestje</em> houden?</h2>
+  <p class="slide-hint">Meerdere opties zijn mogelijk.</p>
+  <div class="tags">
+    <button class="tag" onclick="toggleTag(this)">Buiten in de natuur</button>
+    <button class="tag" onclick="toggleTag(this)">Op het strand</button>
+    <button class="tag" onclick="toggleTag(this)">In een restaurant</button>
+    <button class="tag" onclick="toggleTag(this)">In een café of kroeg</button>
+    <button class="tag" onclick="toggleTag(this)">In een kerk</button>
+    <button class="tag" onclick="toggleTag(this)">Thuis</button>
+    <button class="tag" onclick="toggleTag(this)">In een feestzaal</button>
+    <button class="tag" onclick="toggleTag(this)">In een museum</button>
+    <button class="tag" onclick="toggleTag(this)">Op een boot</button>
+    <button class="tag" onclick="toggleTag(this)">Maakt me niet uit</button>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Hoe intiem of groot moet <em>jouw feestje</em> zijn?</h2>
+  <div class="slider-wrap">
+    <div class="slider-labels">
+      <span class="slider-label">Klein & intiem</span>
+      <span class="slider-label">Groot & uitbundig</span>
+    </div>
+    <input type="range" min="0" max="100" value="50" oninput="updateSlider(this,'grootte-slider',['Alleen de allernauwste kring','Klein & intiem','Voor de close circle','Groter gezelschap','Hoe groter hoe beter'])" />
+    <p class="slider-value" id="grootte-slider">Voor de close circle</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Locatie & sfeer">
+  <p class="slide-eyebrow">Locatie & sfeer</p>
+  <h2 class="slide-q">Heb je een <em>specifieke plek</em> in gedachten?</h2>
+  <p class="slide-hint">Een naam, stad, adres — of gewoon een gevoel.</p>
+  <input type="text" class="text-input" placeholder="Bijv. 'Het café op de hoek waar we altijd kwamen...'"/>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- ETEN INTRO -->
+<div class="slide" data-section="Eten & drinken">
+  <div class="section-intro">
+    <span class="big-ico">🍽️</span>
+    <h2><em>Eten</em><br>& drinken</h2>
+    <div class="divider-line"></div>
+    <p>Bitterballen of niet — jij beslist. En iedereen houdt zich eraan.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Eten & drinken">
+  <p class="slide-eyebrow">Eten & drinken</p>
+  <h2 class="slide-q">Wat voor <em>eten</em> hoort bij jouw feestje?</h2>
+  <p class="slide-hint">Selecteer alles wat past.</p>
+  <div class="tags">
+    <button class="tag" onclick="toggleTag(this)">Bitterballen 🧆</button>
+    <button class="tag" onclick="toggleTag(this)">Tapas & hapjes</button>
+    <button class="tag" onclick="toggleTag(this)">Uitgebreid diner</button>
+    <button class="tag" onclick="toggleTag(this)">BBQ</button>
+    <button class="tag" onclick="toggleTag(this)">Cake & gebak</button>
+    <button class="tag" onclick="toggleTag(this)">Kaas & vleeswaren</button>
+    <button class="tag" onclick="toggleTag(this)">Vegetarisch</button>
+    <button class="tag" onclick="toggleTag(this)">Mijn lievelingsgerecht</button>
+    <button class="tag" onclick="toggleTag(this)">Eten maakt niet uit</button>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Eten & drinken">
+  <p class="slide-eyebrow">Eten & drinken</p>
+  <h2 class="slide-q">Wat is <em>absoluut verplicht</em> op tafel?</h2>
+  <p class="slide-hint">Jouw favoriete gerecht, snack of drankje — leg het vast.</p>
+  <textarea placeholder="Bijv. 'Champagne. Goede champagne. Geen prosecco.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- SPEECHES INTRO -->
+<div class="slide" data-section="Speeches & teksten">
+  <div class="section-intro">
+    <span class="big-ico">✉️</span>
+    <h2><em>Speeches</em><br>& teksten</h2>
+    <div class="divider-line"></div>
+    <p>Wie mag wat zeggen? En hoe lang mag het duren? Jij bepaalt de regels.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Speeches & teksten">
+  <p class="slide-eyebrow">Speeches & teksten</p>
+  <h2 class="slide-q">Wil je dat er <em>toespraken</em> worden gehouden?</h2>
+  <div class="choices">
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🎤</span>
+      <div><span class="choice-label">Ja, graag</span><span class="choice-sub">Laat mensen maar praten. Hoe meer hoe beter.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🤫</span>
+      <div><span class="choice-label">Kort en krachtig</span><span class="choice-sub">Eén of twee personen, max 5 minuten.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">🚫</span>
+      <div><span class="choice-label">Liever niet</span><span class="choice-sub">Geen formele speeches. Gewoon samenzijn.</span></div>
+    </div>
+    <div class="choice" onclick="selectChoice(this)">
+      <span class="choice-ico">📝</span>
+      <div><span class="choice-label">Eén specifiek persoon</span><span class="choice-sub">Ik weet al wie ik wil dat iets zegt.</span></div>
+    </div>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Speeches & teksten">
+  <p class="slide-eyebrow">Speeches & teksten</p>
+  <h2 class="slide-q">Is er iemand die je specifiek wil vragen <em>iets te zeggen?</em></h2>
+  <p class="slide-hint">Naam en eventueel wat je wil dat ze zeggen of vermijden.</p>
+  <textarea placeholder="Bijv. 'Mijn broer Thomas — hij kent de goede verhalen. En de slechte moppen mag hij ook.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- PERSOONLIJKE BOODSCHAP INTRO -->
+<div class="slide" data-section="Persoonlijke boodschap">
+  <div class="section-intro">
+    <span class="big-ico">💌</span>
+    <h2>Jouw <em>woorden.</em></h2>
+    <div class="divider-line"></div>
+    <p>Dit is het meest persoonlijke deel. Neem de tijd. Of sla het over en kom later terug.</p>
+  </div>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Wat wil je <em>zeggen</em> aan de mensen die achterblijven?</h2>
+  <p class="slide-hint">Dit wordt bewaard en gedeeld op het moment dat jij dat wil. Schrijf wat je voelt.</p>
+  <textarea style="min-height:200px" placeholder="Lieve mensen..."></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Is er iets dat je wil dat mensen <em>over je onthouden?</em></h2>
+  <p class="slide-hint">Een waarde, een overtuiging, een herinnering die je wil doorgeven.</p>
+  <textarea placeholder="Bijv. 'Ik hoop dat ze weten hoe trots ik op ze was...'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<div class="slide" data-section="Persoonlijke boodschap">
+  <p class="slide-eyebrow">Persoonlijke boodschap</p>
+  <h2 class="slide-q">Wat is de laatste <em>grap of quote</em> die je wil achterlaten?</h2>
+  <p class="slide-hint">Optioneel — maar humor is ook liefde.</p>
+  <textarea placeholder="Bijv. 'Ik zei toch dat ik ziek was.'"></textarea>
+  <div class="slide-nav">
+    <button class="btn-prev" onclick="qPrev()">← Terug</button>
+    <button class="btn-next" onclick="qNext()">Volgende →</button>
+  </div>
+</div>
+
+<!-- KLAAR -->
+<div class="slide" data-section="Klaar!">
+  <div class="finish">
+    <span class="finish-ico">🌅</span>
+    <h2>Het script is<br><em>geschreven.</em></h2>
+    <p>Goed gedaan. Jij hebt zojuist de mensen van je houden een groot cadeau gegeven: ze hoeven straks niets te gokken. Ze kunnen gewoon verdrietig zijn.</p>
+    <div class="finish-btns">
+      <a href="soulscript-website-v4.html" class="btn-finish-pri">Opslaan & afsluiten</a>
+      <button class="btn-finish-sec" onclick="qGoTo(0)">Opnieuw bekijken</button>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+  </div>
+  </div>
+</div>
+
+<script>
+
+// ── QUIZ OVERLAY ──
+const overlay = document.getElementById('quiz-overlay');
+const qSlides = document.querySelectorAll('#quiz-slides-wrap .slide');
+const qTotal = qSlides.length;
+let qCurrent = 0;
+
+function openQuiz(){
+  overlay.style.display='flex';
+  document.body.style.overflow='hidden';
+  qGoTo(0);
+}
+function closeQuiz(){
+  overlay.style.display='none';
+  document.body.style.overflow='';
+  // Keep avatar visible if registered, but only when overlays are open
+  // Avatar should only show when at least one overlay is open
+  checkAvatarVisibility();
+}
+
+function checkAvatarVisibility(){
+  const registered = document.getElementById('avatar-wrap').dataset.registered === 'true';
+  if(!registered){ document.getElementById('avatar-wrap').style.display='none'; return; }
+  const anyOpen = ['quiz-overlay','zaken-overlay','gasten-overlay','commissie-overlay']
+    .some(id => { const el=document.getElementById(id); return el && (el.style.display==='flex'||el.style.display==='block'); });
+  document.getElementById('avatar-wrap').style.display = anyOpen ? 'block' : 'none';
+}
+function qGoTo(i){
+  qSlides[qCurrent].classList.remove('active');
+  qCurrent=Math.max(0,Math.min(i,qTotal-1));
+  qSlides[qCurrent].classList.add('active');
+  const section=qSlides[qCurrent].dataset.section||'';
+  const pct=Math.round((qCurrent/(qTotal-1))*100);
+  document.getElementById('q-section').textContent=section;
+  document.getElementById('q-fill').style.width=pct+'%';
+  document.getElementById('q-count').textContent=qCurrent===0?'':(qCurrent+' / '+(qTotal-1));
+  overlay.querySelector('div[style*="flex:1"]').scrollTo({top:0,behavior:'smooth'});
+}
+function qNext(){qGoTo(qCurrent+1)}
+function qPrev(){qGoTo(qCurrent-1)}
+function selectChoice(el){
+  const group=el.closest('.choices');
+  group.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function toggleTag(el){el.classList.toggle('selected')}
+function updateSlider(el,id,labels){
+  const v=parseInt(el.value);
+  const idx=Math.floor(v/100*(labels.length-1));
+  document.getElementById(id).textContent=labels[idx];
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.style.display==='flex')closeQuiz()});
+
+
+function toggleCheckRow(labelEl){
+  // Let the browser handle checkbox toggle, then sync styling
+  setTimeout(() => {
+    const checked = labelEl.querySelector('input').checked;
+    if(checked) labelEl.classList.add('checked');
+    else labelEl.classList.remove('checked');
+  }, 0);
+}
+
+
+function verzamelAntwoorden(){
+  const vragen = [
+    {v:'Manier van opbaren', id:'opbaren'},
+    {v:'Type uitvaart', id:'uitvaart'},
+    {v:'Donor', id:'donor'},
+    {v:'Budget', id:'budget'},
+    {v:'Berichtgeving', id:'berichtgeving'},
+  ];
+  // Collect selected choices from slides
+  const secties = document.querySelectorAll('#quiz-slides-wrap .slide');
+  let tekst = 'Mijn SoulScript basiswensen\n';
+  tekst += '================================\n\n';
+  secties.forEach(slide => {
+    const section = slide.dataset.section;
+    if(!section || section === 'Welkom' || section === 'Basisvragen klaar!' || section === 'Registratie' || section === 'Klaar!') return;
+    const q = slide.querySelector('.slide-q');
+    if(!q) return;
+    const vraag = q.textContent.trim();
+    let antwoord = '';
+    const selected = slide.querySelector('.choice.selected .choice-label');
+    if(selected) antwoord = selected.textContent.trim();
+    const input = slide.querySelector('input[type=text], input[type=email]');
+    if(input && input.value) antwoord = input.value;
+    const ta = slide.querySelector('textarea');
+    if(ta && ta.value) antwoord = ta.value;
+    const tags = [...slide.querySelectorAll('.tag.selected, .ztag.selected')].map(t=>t.textContent.trim());
+    if(tags.length) antwoord = tags.join(', ');
+    if(antwoord) tekst += section + '\n— ' + vraag + '\n✓ ' + antwoord + '\n\n';
+  });
+  return tekst;
+}
+
+function downloadAntwoorden(){
+  const tekst = verzamelAntwoorden();
+  const blob = new Blob([tekst], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'mijn-soulscript-wensen.txt';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function mailAntwoorden(){
+  const tekst = verzamelAntwoorden();
+  const onderwerp = encodeURIComponent('Mijn SoulScript basiswensen');
+  const body = encodeURIComponent(tekst);
+  window.location.href = 'mailto:?subject=' + onderwerp + '&body=' + body;
+}
+
+function deelWhatsapp(){
+  const tekst = verzamelAntwoorden();
+  const msg = encodeURIComponent(tekst);
+  window.open('https://wa.me/?text=' + msg, '_blank');
+}
+
+
+// ── GASTENLIJST ──
+let gastenTeller = 0;
+
+function openGasten(){
+  document.getElementById('gasten-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  if(gastenTeller===0) voegGastToe();
+}
+function closeGasten(){
+  document.getElementById('gasten-overlay').style.display='none';
+  checkAvatarVisibility();
+}
+
+function voegGastToe(){
+  gastenTeller++;
+  const id = 'gast-'+gastenTeller;
+  const div = document.createElement('div');
+  div.id = id;
+  div.style.cssText='background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.1);padding:24px 26px;position:relative;';
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <span style="font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);">Gast ${gastenTeller}</span>
+      <button onclick="document.getElementById('${id}').remove()" style="font-size:11px;color:rgba(253,246,238,.25);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;">✕ Verwijder</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div>
+        <label class="zaken-label">Voornaam</label>
+        <input type="text" class="zaken-input" placeholder="Voornaam" />
+      </div>
+      <div>
+        <label class="zaken-label">Achternaam</label>
+        <input type="text" class="zaken-input" placeholder="Achternaam" />
+      </div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label class="zaken-label">Telefoonnummer</label>
+      <input type="tel" class="zaken-input" placeholder="+31 6 12345678" />
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label class="zaken-label">Instagram</label>
+        <input type="text" class="zaken-input" placeholder="@gebruikersnaam" />
+      </div>
+      <div>
+        <label class="zaken-label">Facebook / andere social media</label>
+        <input type="text" class="zaken-input" placeholder="Naam of link" />
+      </div>
+    </div>
+  `;
+  document.getElementById('gasten-lijst').appendChild(div);
+}
+
+function slaGastenOp(){
+  document.getElementById('gasten-saved').style.display='block';
+  setTimeout(()=>document.getElementById('gasten-saved').style.display='none',4000);
+}
+
+// ── FEESTCOMMISSIE ──
+let commissieTeller = 0;
+
+function openCommissie(){
+  document.getElementById('commissie-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+  if(commissieTeller===0) voegLidToe();
+}
+function closeCommissie(){
+  document.getElementById('commissie-overlay').style.display='none';
+  checkAvatarVisibility();
+}
+
+function voegLidToe(){
+  commissieTeller++;
+  const id = 'lid-'+commissieTeller;
+  const div = document.createElement('div');
+  div.id = id;
+  div.style.cssText='background:rgba(44,26,74,.4);border:1px solid rgba(245,166,35,.1);padding:24px 26px;position:relative;';
+  div.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+      <span style="font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);">Commissielid ${commissieTeller}</span>
+      <button onclick="document.getElementById('${id}').remove()" style="font-size:11px;color:rgba(253,246,238,.25);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;">✕ Verwijder</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <div>
+        <label class="zaken-label">Voornaam</label>
+        <input type="text" class="zaken-input" placeholder="Voornaam" />
+      </div>
+      <div>
+        <label class="zaken-label">Achternaam</label>
+        <input type="text" class="zaken-input" placeholder="Achternaam" />
+      </div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label class="zaken-label">Relatie tot jou</label>
+      <select class="zaken-input" style="cursor:pointer;appearance:none;">
+        <option value="" style="background:#2C1A4A;">Kies relatie...</option>
+        <option style="background:#2C1A4A;">Partner</option>
+        <option style="background:#2C1A4A;">Kind</option>
+        <option style="background:#2C1A4A;">Ouder</option>
+        <option style="background:#2C1A4A;">Broer / Zus</option>
+        <option style="background:#2C1A4A;">Beste vriend(in)</option>
+        <option style="background:#2C1A4A;">Vriend / Kennis</option>
+        <option style="background:#2C1A4A;">Notaris</option>
+        <option style="background:#2C1A4A;">Anders</option>
+      </select>
+    </div>
+    <div style="margin-bottom:12px;">
+      <label class="zaken-label">Telefoonnummer</label>
+      <input type="tel" class="zaken-input" placeholder="+31 6 12345678" />
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label class="zaken-label">Instagram</label>
+        <input type="text" class="zaken-input" placeholder="@gebruikersnaam" />
+      </div>
+      <div>
+        <label class="zaken-label">Facebook / andere social media</label>
+        <input type="text" class="zaken-input" placeholder="Naam of link" />
+      </div>
+    </div>
+  `;
+  document.getElementById('commissie-lijst').appendChild(div);
+}
+
+function slaCommissieOp(){
+  document.getElementById('commissie-saved').style.display='block';
+  setTimeout(()=>document.getElementById('commissie-saved').style.display='none',4000);
+}
+
+// ── MIJN ZAKEN ──
+function openZaken(){
+  document.getElementById('zaken-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeZaken(){
+  document.getElementById('zaken-overlay').style.display='none';
+  checkAvatarVisibility();
+}
+function toggleZtag(el){el.classList.toggle('selected');}
+function toggleJaNee(prefix, val){
+  document.getElementById(prefix+'-ja').classList.toggle('active', val==='ja');
+  document.getElementById(prefix+'-nee').classList.toggle('active', val==='nee');
+  const details = document.getElementById(prefix+'-details');
+  if(details) details.style.display = val==='ja' ? 'block' : 'none';
+}
+function slaZakenOp(){
+  document.getElementById('zaken-saved').style.display='block';
+  setTimeout(()=>document.getElementById('zaken-saved').style.display='none', 4000);
+}
+// Show Mijn Zaken button after registration
+function toonZakenKnop(){
+  const voornaam = document.getElementById('reg-voornaam').value.trim();
+  const achternaam = document.getElementById('reg-achternaam').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const initialen = ((voornaam[0]||'') + (achternaam[0]||'')).toUpperCase() || '??';
+
+  document.getElementById('avatar-initials').textContent = initialen;
+  document.getElementById('avatar-naam').textContent = (voornaam + ' ' + achternaam).trim() || 'Mijn account';
+  document.getElementById('avatar-email-label').textContent = email;
+  document.getElementById('avatar-wrap').dataset.registered = 'true';
+  document.getElementById('avatar-wrap').style.display = 'block';
+
+  // Verberg het gast-icoontje (Inloggen / Maak een account) zodra er een account is
+  const guestWrap = document.getElementById('guest-avatar-wrap');
+  if(guestWrap) guestWrap.style.display = 'none';
+}
+
+function openLogin(){
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.getElementById('login-error').style.display = 'none';
+  setTimeout(()=>document.getElementById('login-email').focus(), 50);
+}
+function closeLogin(){
+  document.getElementById('login-overlay').style.display = 'none';
+  document.getElementById('login-form').reset();
+  document.getElementById('login-error').style.display = 'none';
+}
+function submitLogin(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  // TODO: koppel dit aan je echte authenticatie-backend.
+  // Onderstaande is een placeholder zodat het formulier werkt in de demo.
+  if(!email || !password){
+    const err = document.getElementById('login-error');
+    err.textContent = 'Vul je e-mailadres en wachtwoord in.';
+    err.style.display = 'block';
+    return false;
+  }
+
+  const err = document.getElementById('login-error');
+  err.textContent = 'Inloggen is nog niet aangesloten op een account-systeem — dit is een demo-formulier.';
+  err.style.display = 'block';
+  return false;
+}
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && document.getElementById('login-overlay').style.display==='flex') closeLogin();
+});
+
+function toggleGuestMenu(){
+  const menu = document.getElementById('guest-menu');
+  const btn = document.getElementById('guest-avatar-btn');
+  const open = menu.style.display !== 'block';
+  menu.style.display = open ? 'block' : 'none';
+  if(btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+// Close guest menu when clicking outside
+document.addEventListener('click', function(e){
+  const wrap = document.getElementById('guest-avatar-wrap');
+  if(wrap && !wrap.contains(e.target)){
+    const menu = document.getElementById('guest-menu');
+    if(menu) menu.style.display = 'none';
+    const btn = document.getElementById('guest-avatar-btn');
+    if(btn) btn.setAttribute('aria-expanded', 'false');
+  }
+});
+
+function logout(){
+  // Sluit alle open overlays
+  closeQuiz(); closeZaken(); closeGasten(); closeCommissie();
+
+  // Reset accountstatus
+  const avatarWrap = document.getElementById('avatar-wrap');
+  avatarWrap.dataset.registered = 'false';
+  avatarWrap.style.display = 'none';
+  document.getElementById('avatar-menu').style.display = 'none';
+  document.getElementById('avatar-initials').textContent = '??';
+  document.getElementById('avatar-naam').textContent = 'Mijn account';
+  document.getElementById('avatar-email-label').textContent = '';
+
+  // Laat het gast-icoontje (Inloggen / Maak een account) weer zien
+  const guestWrap = document.getElementById('guest-avatar-wrap');
+  if(guestWrap) guestWrap.style.display = '';
+
+  // Terug naar de homepage, bovenaan
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleAvatarMenu(){
+  const menu = document.getElementById('avatar-menu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+// Close avatar menu when clicking outside
+document.addEventListener('click', function(e){
+  const wrap = document.getElementById('avatar-wrap');
+  if(wrap && !wrap.contains(e.target)){
+    const menu = document.getElementById('avatar-menu');
+    if(menu) menu.style.display = 'none';
+  }
+});
+
+function submitRegistratie(){
+  const email = document.getElementById('reg-email').value.trim();
+  document.getElementById('reg-email-display').textContent = email || 'jouw e-mailadres';
+  toonZakenKnop();
+  qNext();
+}
+
+
+</script>
+
+<!-- ══ MIJN ZAKEN OVERLAY ══ -->
+<div id="zaken-overlay" style="position:fixed;inset:0;z-index:600;background:var(--night);display:none;flex-direction:column;overflow-y:auto;">
+
+  <!-- Header -->
+  <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:70px;flex-shrink:0;background:rgba(26,16,37,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(245,166,35,.1);">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);">Soul<b style="color:var(--gold);font-weight:400;">Script</b></span>
+      <span style="width:1px;height:20px;background:rgba(245,166,35,.2);"></span>
+      <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);">🔐 Mijn Zaken</span>
+    </div>
+    <button onclick="closeZaken()" style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.45);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">← Terug naar vragenlijst</button>
+  </div>
+
+  <!-- Body -->
+  <div style="flex:1;max-width:780px;width:100%;margin:0 auto;padding:60px 52px 100px;">
+
+    <!-- Intro -->
+    <div style="margin-bottom:56px;">
+      <p style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:10px;margin-bottom:18px;"><span style="display:block;width:24px;height:1px;background:var(--orange);"></span>Alleen zichtbaar voor jou</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:16px;">Jouw praktische <em style="font-style:italic;color:var(--gold);">zaken.</em></h2>
+      <p style="font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:560px;">Leg hier vast waar jouw financiën, verzekeringen en documenten staan. Zodat de mensen die achterblijven niet hoeven te zoeken.</p>
+    </div>
+
+    <!-- SECTIE: BANKREKENINGEN -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">🏦</span>
+        <div>
+          <h3 class="zaken-h3">Bankrekeningen</h3>
+          <p class="zaken-sub">Bij welke bank(en) heb je een rekening?</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;" id="bank-tags">
+          <button class="ztag" onclick="toggleZtag(this)">ING</button>
+          <button class="ztag" onclick="toggleZtag(this)">ABN AMRO</button>
+          <button class="ztag" onclick="toggleZtag(this)">Rabobank</button>
+          <button class="ztag" onclick="toggleZtag(this)">SNS Bank</button>
+          <button class="ztag" onclick="toggleZtag(this)">Triodos</button>
+          <button class="ztag" onclick="toggleZtag(this)">Bunq</button>
+          <button class="ztag" onclick="toggleZtag(this)">Revolut</button>
+          <button class="ztag" onclick="toggleZtag(this)">N26</button>
+          <button class="ztag" onclick="toggleZtag(this)">Knab</button>
+          <button class="ztag" onclick="toggleZtag(this)">RegioBank</button>
+        </div>
+        <label class="zaken-label">Andere bank(en)</label>
+        <input type="text" class="zaken-input" placeholder="Naam van de bank..." />
+        <label class="zaken-label" style="margin-top:14px;">Aanvullende informatie <span style="opacity:.4;">(optioneel)</span></label>
+        <textarea class="zaken-textarea" placeholder="Bijv. rekeningnummers, type rekening, spaarrekening bij..."></textarea>
+      </div>
+    </div>
+
+    <!-- SECTIE: CRYPTO & BELEGGINGEN -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">₿</span>
+        <div>
+          <h3 class="zaken-h3">Crypto & beleggingen</h3>
+          <p class="zaken-sub">Heb je crypto of beleggingen? Leg vast waar die staan.</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <label class="zaken-label">Heb je crypto?</label>
+        <div style="display:flex;gap:2px;margin-bottom:16px;">
+          <button class="ztoggle active" id="crypto-ja" onclick="toggleJaNee('crypto','ja')">Ja</button>
+          <button class="ztoggle" id="crypto-nee" onclick="toggleJaNee('crypto','nee')">Nee</button>
+        </div>
+        <div id="crypto-details">
+          <label class="zaken-label">Welke cryptomunten / platforms?</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <button class="ztag" onclick="toggleZtag(this)">Bitcoin (BTC)</button>
+            <button class="ztag" onclick="toggleZtag(this)">Ethereum (ETH)</button>
+            <button class="ztag" onclick="toggleZtag(this)">Solana (SOL)</button>
+            <button class="ztag" onclick="toggleZtag(this)">XRP</button>
+            <button class="ztag" onclick="toggleZtag(this)">Binance (BNB)</button>
+            <button class="ztag" onclick="toggleZtag(this)">Coinbase</button>
+            <button class="ztag" onclick="toggleZtag(this)">Bitvavo</button>
+            <button class="ztag" onclick="toggleZtag(this)">Ledger (hardware wallet)</button>
+          </div>
+          <label class="zaken-label">Aanvullende informatie</label>
+          <textarea class="zaken-textarea" placeholder="Bijv. waar de seed phrase staat, naam van exchange, wallet-adres..."></textarea>
+        </div>
+        <label class="zaken-label" style="margin-top:14px;">Heb je beleggingen?</label>
+        <div style="display:flex;gap:2px;margin-bottom:16px;">
+          <button class="ztoggle active" id="beleg-ja" onclick="toggleJaNee('beleg','ja')">Ja</button>
+          <button class="ztoggle" id="beleg-nee" onclick="toggleJaNee('beleg','nee')">Nee</button>
+        </div>
+        <div id="beleg-details">
+          <label class="zaken-label">Platform / broker</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <button class="ztag" onclick="toggleZtag(this)">DEGIRO</button>
+            <button class="ztag" onclick="toggleZtag(this)">Saxo Bank</button>
+            <button class="ztag" onclick="toggleZtag(this)">eToro</button>
+            <button class="ztag" onclick="toggleZtag(this)">ING Beleggen</button>
+            <button class="ztag" onclick="toggleZtag(this)">ABN AMRO MeesPierson</button>
+            <button class="ztag" onclick="toggleZtag(this)">Rabobank Beleggen</button>
+          </div>
+          <label class="zaken-label">Aanvullende informatie</label>
+          <textarea class="zaken-textarea" placeholder="Bijv. type aandelen, fondsen, ETF's..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIE: UITVAARTVERZEKERING -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">🕊️</span>
+        <div>
+          <h3 class="zaken-h3">Uitvaartverzekering</h3>
+          <p class="zaken-sub">Heb je een uitvaartverzekering? En zo ja, bij wie?</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <label class="zaken-label">Heb je een uitvaartverzekering?</label>
+        <div style="display:flex;gap:2px;margin-bottom:16px;">
+          <button class="ztoggle active" id="uitv-ja" onclick="toggleJaNee('uitv','ja')">Ja</button>
+          <button class="ztoggle" id="uitv-nee" onclick="toggleJaNee('uitv','nee')">Nee</button>
+        </div>
+        <div id="uitv-details">
+          <label class="zaken-label">Bij welke verzekeraar?</label>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:16px;">
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">DELA</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Grootste uitvaartverzekeraar van Nederland</span></div></label>
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">Yarden</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Coöperatieve uitvaartverzekeraar</span></div></label>
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">Monuta</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Verzekering én uitvaartbegeleiding</span></div></label>
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">Nuvema</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Onderdeel van de Numangroep</span></div></label>
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">Ardanta</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Onderdeel van Achmea</span></div></label>
+            <label class="radio-row" onclick="toggleCheckRow(this)"><input type="checkbox" name="uitv-verzekeraar" style="accent-color:var(--orange);width:16px;height:16px;flex-shrink:0;" /><div><span class="radio-label">Anders / overig</span><span style="display:block;font-size:11px;color:rgba(253,246,238,.35);margin-top:2px;">Via werkgever, eigen verzekeraar of andere aanbieder</span></div></label>
+          </div>
+          <label class="zaken-label">Aanvullende informatie</label>
+          <textarea class="zaken-textarea" placeholder="Bijv. polisnummer, contactpersoon, dekkingsbedrag..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIE: PENSIOENFONDS / AOW -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">🏛️</span>
+        <div>
+          <h3 class="zaken-h3">Pensioenfonds & AOW</h3>
+          <p class="zaken-sub">Waar is jouw pensioen opgebouwd?</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <label class="zaken-label">Pensioenfonds / uitvoerder</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <button class="ztag" onclick="toggleZtag(this)">ABP</button>
+          <button class="ztag" onclick="toggleZtag(this)">PFZW</button>
+          <button class="ztag" onclick="toggleZtag(this)">PMT</button>
+          <button class="ztag" onclick="toggleZtag(this)">PME</button>
+          <button class="ztag" onclick="toggleZtag(this)">BpfBOUW</button>
+          <button class="ztag" onclick="toggleZtag(this)">NN (Nationale Nederlanden)</button>
+          <button class="ztag" onclick="toggleZtag(this)">Aegon</button>
+          <button class="ztag" onclick="toggleZtag(this)">Zwitserleven</button>
+          <button class="ztag" onclick="toggleZtag(this)">ASR</button>
+        </div>
+        <label class="zaken-label">Andere / aanvullende informatie</label>
+        <textarea class="zaken-textarea" placeholder="Bijv. naam van het fonds, of je een lijfrente hebt, mijnpensioenoverzicht.nl inloggegevens..."></textarea>
+      </div>
+    </div>
+
+    <!-- SECTIE: TESTAMENT / NOTARIS -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">⚖️</span>
+        <div>
+          <h3 class="zaken-h3">Testament & notaris</h3>
+          <p class="zaken-sub">Heb je een testament opgesteld?</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <label class="zaken-label">Heb je een testament?</label>
+        <div style="display:flex;gap:2px;margin-bottom:16px;">
+          <button class="ztoggle active" id="test-ja" onclick="toggleJaNee('test','ja')">Ja</button>
+          <button class="ztoggle" id="test-nee" onclick="toggleJaNee('test','nee')">Nee</button>
+        </div>
+        <div id="test-details">
+          <label class="zaken-label">Naam notariskantoor</label>
+          <input type="text" class="zaken-input" placeholder="Bijv. Notariskantoor De Vries & Partners..." />
+          <label class="zaken-label" style="margin-top:14px;">Aanvullende informatie</label>
+          <textarea class="zaken-textarea" placeholder="Bijv. waar het origineel ligt, naam van de notaris, datum van opstelling, erfgenamen..."></textarea>
+        </div>
+        <label class="zaken-label" style="margin-top:14px;">Heb je een volmacht / levenstestament?</label>
+        <div style="display:flex;gap:2px;margin-bottom:16px;">
+          <button class="ztoggle active" id="volm-ja" onclick="toggleJaNee('volm','ja')">Ja</button>
+          <button class="ztoggle" id="volm-nee" onclick="toggleJaNee('volm','nee')">Nee</button>
+        </div>
+        <div id="volm-details">
+          <textarea class="zaken-textarea" placeholder="Bijv. naam van de gemachtigde, waar de volmacht is opgeslagen..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIE: EIGENDOM -->
+    <div class="zaken-sectie">
+      <div class="zaken-sectie-header">
+        <span class="zaken-ico">🏠</span>
+        <div>
+          <h3 class="zaken-h3">Eigendom</h3>
+          <p class="zaken-sub">Wat bezit je? Huis, auto, grond, andere eigendommen.</p>
+        </div>
+      </div>
+      <div class="zaken-body">
+        <label class="zaken-label">Type eigendom</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <button class="ztag" onclick="toggleZtag(this)">Koopwoning</button>
+          <button class="ztag" onclick="toggleZtag(this)">Tweede woning</button>
+          <button class="ztag" onclick="toggleZtag(this)">Vakantiewoning</button>
+          <button class="ztag" onclick="toggleZtag(this)">Auto</button>
+          <button class="ztag" onclick="toggleZtag(this)">Motor / scooter</button>
+          <button class="ztag" onclick="toggleZtag(this)">Boot</button>
+          <button class="ztag" onclick="toggleZtag(this)">Grond / perceel</button>
+          <button class="ztag" onclick="toggleZtag(this)">Bedrijfspand</button>
+        </div>
+        <label class="zaken-label">Aanvullende informatie</label>
+        <textarea class="zaken-textarea" placeholder="Bijv. adres, kenteken, hypotheekverstrekker, WOZ-waarde, sleutels liggen bij..."></textarea>
+      </div>
+    </div>
+
+    <!-- Opslaan -->
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid rgba(245,166,35,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <p style="font-size:12px;color:rgba(253,246,238,.25);line-height:1.6;max-width:400px;">Jouw gegevens worden versleuteld opgeslagen en zijn alleen zichtbaar voor wie jij dat toestaat.</p>
+      <button onclick="slaZakenOp()" style="background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;transition:background .2s;">Opslaan →</button>
+    </div>
+    <div id="zaken-saved" style="display:none;margin-top:16px;background:rgba(196,94,0,.15);border:1px solid rgba(196,94,0,.3);padding:14px 20px;font-size:13px;color:var(--gold);">✓ Jouw zaken zijn opgeslagen.</div>
+
+  </div>
+</div>
+
+
+<!-- ══ GASTENLIJST OVERLAY ══ -->
+<div id="gasten-overlay" style="position:fixed;inset:0;z-index:600;background:var(--night);display:none;flex-direction:column;overflow-y:auto;">
+  <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:70px;flex-shrink:0;background:rgba(26,16,37,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(245,166,35,.1);">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);">Soul<b style="color:var(--gold);font-weight:400;">Script</b></span>
+      <span style="width:1px;height:20px;background:rgba(245,166,35,.2);"></span>
+      <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);">👥 Gastenlijst</span>
+    </div>
+    <button onclick="closeGasten()" style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.45);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">← Terug naar vragenlijst</button>
+  </div>
+
+  <div style="flex:1;max-width:780px;width:100%;margin:0 auto;padding:60px 52px 100px;">
+    <div style="margin-bottom:48px;">
+      <p style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:10px;margin-bottom:18px;"><span style="display:block;width:24px;height:1px;background:var(--orange);"></span>Wie wil jij erbij</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:14px;">Jouw <em style="font-style:italic;color:var(--gold);">gastenlijst.</em></h2>
+      <p style="font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:560px;">Wie wil jij op jouw laatste feestje? Voeg ze hier toe zodat de organisatie exact weet wie uitgenodigd moet worden.</p>
+    </div>
+
+    <!-- Gasten list container -->
+    <div id="gasten-lijst" style="display:flex;flex-direction:column;gap:2px;margin-bottom:16px;"></div>
+
+    <!-- Add gast button -->
+    <button onclick="voegGastToe()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(44,26,74,.3);border:1px dashed rgba(245,166,35,.2);padding:18px;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(253,246,238,.4);transition:all .2s;" onmouseover="this.style.borderColor='rgba(245,166,35,.5)';this.style.color='var(--cream)'" onmouseout="this.style.borderColor='rgba(245,166,35,.2)';this.style.color='rgba(253,246,238,.4)'">
+      <span style="font-size:20px;font-style:normal;">+</span> Persoon toevoegen
+    </button>
+
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid rgba(245,166,35,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <p style="font-size:12px;color:rgba(253,246,238,.25);line-height:1.6;max-width:400px;">Je gastenlijst wordt veilig opgeslagen en alleen gedeeld met de feestcommissie die jij aanwijst.</p>
+      <button onclick="slaGastenOp()" style="background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;">Opslaan →</button>
+    </div>
+    <div id="gasten-saved" style="display:none;margin-top:16px;background:rgba(196,94,0,.15);border:1px solid rgba(196,94,0,.3);padding:14px 20px;font-size:13px;color:var(--gold);">✓ Gastenlijst opgeslagen.</div>
+  </div>
+</div>
+
+<!-- ══ FEESTCOMMISSIE OVERLAY ══ -->
+<div id="commissie-overlay" style="position:fixed;inset:0;z-index:600;background:var(--night);display:none;flex-direction:column;overflow-y:auto;">
+  <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:0 52px;height:70px;flex-shrink:0;background:rgba(26,16,37,.97);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(245,166,35,.1);">
+    <div style="display:flex;align-items:center;gap:20px;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--cream);">Soul<b style="color:var(--gold);font-weight:400;">Script</b></span>
+      <span style="width:1px;height:20px;background:rgba(245,166,35,.2);"></span>
+      <span style="font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);">🎗️ Feestcommissie</span>
+    </div>
+    <button onclick="closeCommissie()" style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(253,246,238,.45);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;">← Terug naar vragenlijst</button>
+  </div>
+
+  <div style="flex:1;max-width:780px;width:100%;margin:0 auto;padding:60px 52px 100px;">
+    <div style="margin-bottom:48px;">
+      <p style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:10px;margin-bottom:18px;"><span style="display:block;width:24px;height:1px;background:var(--orange);"></span>Wie vertrouw jij</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,50px);font-weight:300;color:var(--cream);line-height:1.15;margin-bottom:14px;">Jouw <em style="font-style:italic;color:var(--gold);">feestcommissie.</em></h2>
+      <p style="font-size:14px;color:rgba(253,246,238,.4);line-height:1.72;max-width:560px;">Dit zijn de mensen die jij machtigt om jouw wensen in te zien na jouw overlijden. Zij zorgen dat alles verloopt zoals jij het wil.</p>
+    </div>
+
+    <div style="background:rgba(196,94,0,.08);border:1px solid rgba(196,94,0,.2);border-left:3px solid var(--orange);padding:16px 20px;margin-bottom:32px;">
+      <p style="font-size:12px;color:rgba(253,246,238,.5);line-height:1.7;"><strong style="color:rgba(253,246,238,.75);">🔐 Belangrijk:</strong> De mensen op deze lijst krijgen pas toegang tot jouw wensen op het moment dat dit door jou of een vertrouwenspersoon is bevestigd. Jij blijft altijd in controle.</p>
+    </div>
+
+    <!-- Commissie list container -->
+    <div id="commissie-lijst" style="display:flex;flex-direction:column;gap:2px;margin-bottom:16px;"></div>
+
+    <!-- Add lid button -->
+    <button onclick="voegLidToe()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(44,26,74,.3);border:1px dashed rgba(245,166,35,.2);padding:18px;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(253,246,238,.4);transition:all .2s;" onmouseover="this.style.borderColor='rgba(245,166,35,.5)';this.style.color='var(--cream)'" onmouseout="this.style.borderColor='rgba(245,166,35,.2)';this.style.color='rgba(253,246,238,.4)'">
+      <span style="font-size:20px;font-style:normal;">+</span> Persoon toevoegen
+    </button>
+
+    <div style="margin-top:48px;padding-top:32px;border-top:1px solid rgba(245,166,35,.1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <p style="font-size:12px;color:rgba(253,246,238,.25);line-height:1.6;max-width:400px;">Jouw feestcommissie wordt veilig opgeslagen. Zij ontvangen pas toegang op het moment dat jij dat bepaalt.</p>
+      <button onclick="slaCommissieOp()" style="background:var(--orange);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:16px 38px;border:none;cursor:pointer;">Opslaan →</button>
+    </div>
+    <div id="commissie-saved" style="display:none;margin-top:16px;background:rgba(196,94,0,.15);border:1px solid rgba(196,94,0,.3);padding:14px 20px;font-size:13px;color:var(--gold);">✓ Feestcommissie opgeslagen.</div>
+  </div>
+</div>
+
+
+<!-- ══ AVATAR (fixed, always on top) ══ -->
+<div id="avatar-wrap" style="display:none;position:fixed;top:15px;right:20px;z-index:9000;">
+  <button id="avatar-btn" onclick="toggleAvatarMenu()" style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--rose));border:2px solid rgba(245,166,35,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--cream);letter-spacing:.05em;transition:border-color .2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(245,166,35,.4)'">
+    <span id="avatar-initials">??</span>
+  </button>
+
+  <div id="avatar-menu" style="display:none;position:absolute;top:52px;right:0;min-width:240px;background:rgba(26,16,37,.98);border:1px solid rgba(245,166,35,.18);box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:9001;overflow:hidden;">
+
+    <div style="padding:16px 20px;border-bottom:1px solid rgba(245,166,35,.1);background:rgba(44,26,74,.4);">
+      <p id="avatar-naam" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--cream);margin-bottom:2px;">Mijn account</p>
+      <p id="avatar-email-label" style="font-size:11px;color:rgba(253,246,238,.3);letter-spacing:.03em;"></p>
+    </div>
+
+    <div style="padding:6px 0;">
+      <div style="padding:6px 20px 4px;"><span style="font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,166,35,.4);">Mijn wensen</span></div>
+      <button onclick="toggleAvatarMenu();openQuiz()" class="avatar-menu-item"><span style="font-size:15px;">✏️</span><span>Bewerken & aanvullen</span><span class="ami-badge">Actief</span></button>
+      <button onclick="toggleAvatarMenu();openQuiz();setTimeout(()=>qGoTo(7),80)" class="avatar-menu-item"><span style="font-size:15px;">🔗</span><span>Wensen delen</span><span class="ami-badge">Actief</span></button>
+      <button onclick="toggleAvatarMenu();alert('Notificaties — binnenkort beschikbaar.')" class="avatar-menu-item"><span style="font-size:15px;">🔔</span><span>Notificaties</span><span class="ami-badge">Actief</span></button>
+    </div>
+
+    <div style="height:1px;background:rgba(245,166,35,.08);margin:2px 0;"></div>
+
+    <div style="padding:6px 0;">
+      <div style="padding:6px 20px 4px;display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,166,35,.4);">Mijn modules</span>
+        <span style="font-size:8px;letter-spacing:.1em;color:rgba(253,246,238,.2);font-style:italic;">Alleen voor betaalde accounts</span>
+      </div>
+      <button onclick="toggleAvatarMenu();alert('Upgrade naar Pro om Feestcommissie te gebruiken.')" class="avatar-menu-item ami-soon"><span style="font-size:15px;">🎗️</span><span>Feestcommissie</span><span class="ami-lock">🔒</span></button>
+      <button onclick="toggleAvatarMenu();alert('Upgrade naar Pro om Mijn Zaken te gebruiken.')" class="avatar-menu-item ami-soon"><span style="font-size:15px;">🔐</span><span>Mijn Zaken</span><span class="ami-lock">🔒</span></button>
+      <button onclick="toggleAvatarMenu();alert('Upgrade naar Pro om Gastenlijst te gebruiken.')" class="avatar-menu-item ami-soon"><span style="font-size:15px;">👥</span><span>Gastenlijst</span><span class="ami-lock">🔒</span></button>
+    </div>
+
+    <div style="height:1px;background:rgba(245,166,35,.08);margin:2px 0;"></div>
+
+    <div style="padding:6px 0;">
+      <div style="padding:6px 20px 4px;"><span style="font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:rgba(245,166,35,.4);">Account</span></div>
+      <button onclick="toggleAvatarMenu();alert('Instellingen — binnenkort beschikbaar.')" class="avatar-menu-item"><span style="font-size:15px;">⚙️</span><span>Instellingen</span><span class="ami-badge">Actief</span></button>
+      <button onclick="toggleAvatarMenu();alert('Privacy & beveiliging — binnenkort beschikbaar.')" class="avatar-menu-item"><span style="font-size:15px;">🛡️</span><span>Privacy & beveiliging</span><span class="ami-badge">Actief</span></button>
+      <button onclick="toggleAvatarMenu();closeQuiz();closeZaken();closeGasten();closeCommissie();document.getElementById('pricing').scrollIntoView({behavior:'smooth'});" class="avatar-menu-item"><span style="font-size:15px;">⭐</span><span>Upgraden naar Pro</span><span class="ami-badge">Actief</span></button>
+    </div>
+
+    <div style="height:1px;background:rgba(245,166,35,.08);margin:2px 0;"></div>
+
+    <div style="padding:6px 0 8px;">
+      <button onclick="toggleAvatarMenu();logout();" class="avatar-menu-item"><span style="font-size:15px;">🚪</span><span>Uitloggen</span><span class="ami-badge">Actief</span></button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div id="login-overlay" role="dialog" aria-modal="true" aria-label="Inloggen" onclick="if(event.target===this)closeLogin()" style="position:fixed;inset:0;z-index:9500;background:rgba(15,9,22,.85);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px;">
+  <div style="width:100%;max-width:400px;background:#1A1025;border:1px solid rgba(245,166,35,.18);box-shadow:0 20px 60px rgba(0,0,0,.6);padding:40px 36px;position:relative;">
+    <button onclick="closeLogin()" aria-label="Sluiten" style="position:absolute;top:16px;right:16px;font-size:18px;color:rgba(253,246,238,.35);background:none;border:none;cursor:pointer;transition:color .2s;" onmouseover="this.style.color='rgba(245,166,35,.8)'" onmouseout="this.style.color='rgba(253,246,238,.35)'">✕</button>
+
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:var(--cream);margin-bottom:8px;">Welkom terug</h2>
+    <p style="font-size:13px;color:rgba(253,246,238,.45);line-height:1.6;margin-bottom:28px;">Log in om verder te gaan met jouw wensen.</p>
+
+    <div id="login-error" style="display:none;background:rgba(215,90,70,.12);border:1px solid rgba(215,90,70,.3);color:#e8a99a;font-size:12px;padding:10px 14px;margin-bottom:16px;"></div>
+
+    <form id="login-form" onsubmit="return submitLogin(event)">
+      <div style="margin-bottom:16px;">
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">E-mailadres</label>
+        <input id="login-email" type="email" class="text-input" placeholder="jouw@email.nl" required autocomplete="username" />
+      </div>
+      <div style="margin-bottom:8px;">
+        <label style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,246,238,.35);display:block;margin-bottom:8px;">Wachtwoord</label>
+        <input id="login-password" type="password" class="text-input" placeholder="••••••••" required autocomplete="current-password" />
+      </div>
+
+      <div style="text-align:right;margin-bottom:24px;">
+        <a href="#" onclick="alert('Wachtwoord resetten — binnenkort beschikbaar.');return false;" style="font-size:11px;color:rgba(245,166,35,.6);text-decoration:none;">Wachtwoord vergeten?</a>
+      </div>
+
+      <button type="submit" class="btn-pri" style="width:100%;text-align:center;">Inloggen</button>
+    </form>
+
+    <p style="text-align:center;font-size:12px;color:rgba(253,246,238,.35);margin-top:24px;">
+      Nog geen account? <a href="#" onclick="closeLogin();openQuiz();setTimeout(()=>qGoTo(8),80);return false;" style="color:var(--gold);text-decoration:none;">Maak er een aan</a>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
